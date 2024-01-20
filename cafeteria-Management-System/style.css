@@ -83,8 +83,16 @@
     min-height: 100vh;
     background-color: rgb(240, 240, 240);
 }
+#add-food-category {
+    font-size: large;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgb(240, 240, 240);
+}
 
-#add-customer,#add-food {
+#add-customer,#add-food,#add-category {
     background-color: rgb(255, 255, 255);
     padding-left: 200px;
     padding-right: 200px;
