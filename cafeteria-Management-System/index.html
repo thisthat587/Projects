@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    .dropdown {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <i style="background-color:  rgb(3, 105, 3);padding:5px;border-radius: 5px;
+  " class="fas fa-pencil-alt"></i>
+
+  <i style="background-color:red;padding:5px;border-radius: 5px;
+    " class="fas fa-trash-alt"></i>
+
+  <select class="dropdown" id="myDropdown">
+    <option value="" disabled selected>--SELECT--</option>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+    <option value="option4">Option 4</option>
+  </select>
+
+  <script>
+    document.getElementById('myDropdown').addEventListener('change', function () {
+      console.log('You selected: ', this.value);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Sidebar Menu</title>
+    <script src="script.js"></script>
 </head>
 
 <body>
     <div class="sidebar">
-
         <ul>
-            <li><a href="#">DASHBOARD</a></li>
+            <li class="dropdown"><a href="#">DASHBOARD</a></li>
 
             <li class="dropdown">
                 <a href="#">CUSTOMER</a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="getElementById('add-customer-detail').style.display = 'flex'">ADD CUSTOMER</a>
+                    <a href="#" onclick=onClickOfAddCustomerDetail()>ADD CUSTOMER</a>
                     <a href="#">MANAGE CUSTOMER</a>
                 </div>
             </li>
@@ -33,7 +33,7 @@
             <li class="dropdown">
                 <a href="#">FOOD</a>
                 <div class="dropdown-content">
-                    <a href="#">ADD FOOD</a>
+                    <a href="#" onclick=onClickOfAddFoodItem()>ADD FOOD</a>
                     <a href="#">MANAGE FOOD</a>
                 </div>
             </li>
@@ -44,48 +44,21 @@
                     <a href="#">MANAGE INVOICE</a>
                 </div>
             </li>
-
-
         </ul>
     </div>
-    <!-- add-customer-detail div -->
-    <div id="add-customer-detail">
 
-        <form id="add-customer" action="#" method="post">
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" name="name" required></td>
-                </tr>
-                <tr>
-                    <td>Gender:</td>
-                    <td>
-                        <input type="radio" name="gender" value="Male" id="male" required>
-                        <label for="male">Male</label>
-                        <input type="radio" name="gender" value="Female" id="female" required>
-                        <label for="female">Female</label>
-                        <input type="radio" name="gender" value="Other" id="other" required>
-                        <label for="other">Other</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mobile:</td>
-                    <td><input type="text" name="mobile" required></td>
-                </tr>
-                <tr>
-                    <td>Address:</td>
-                    <td><textarea name="address" rows="4" required></textarea></td>
-                </tr>
-            </table>
-            <input id="add-customer-submit" type="submit" value="Submit">
-        </form>
-    </div>
-    <!-- add-customer-detail div -->
     <div class="content">
-        <!-- Your main content goes here -->
-        <h1>Welcome to my website</h1>
-        <p>This is the main content of the page.</p>
+
+        <!-- add-customer-detail div START-->
+        <div id="add-customer-detail"></div>
+        <!-- add-customer-detail div END -->
+
+        <!-- add-food-item div START -->
+        <div id="add-food-item"></div>
+        <!-- add-food-item div END -->
+
     </div>
+
 </body>
 
 </html>
