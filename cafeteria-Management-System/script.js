@@ -6,6 +6,7 @@ class cafe {
         document.getElementById('add-food-item').innerHTML =
             `
         <form id="add-food" action="#" method="post">
+        <h2><u>Add Food Item </u></h2>
         <table>
             <tr>
                 <td>Name </td>
@@ -51,6 +52,7 @@ class cafe {
         document.getElementById('add-customer-detail').innerHTML =
             `
         <form id="add-customer" action="#" method="post">
+        <h2><u>Add Customer</u></h2>
         <table>
             <tr>
             <td>Name </td>
