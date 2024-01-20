@@ -1,0 +1,104 @@
+/* Styling for the sidebar */
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: skyblue;
+    display: block;
+    padding: 10px;
+}
+
+/* Styling for the content */
+.content {
+    margin-left: 300px;
+    /* Adjust this to match the width of the sidebar */
+    padding: 20px;
+}
+
+
+/* Style the dropdown container */
+
+.dropdown {
+    position: relative;
+    display: flex;
+}
+
+/* Style the dropdown content */
+.dropdown-content {
+    display: none;
+    background-color: #333;
+    min-width: 160px;
+    z-index: 1;
+}
+
+/* Style the dropdown links */
+.dropdown-content a {
+    color: skyblue;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    border: 1px solid  skyblue;
+
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+    display: inline-block;
+}
+
+/* add-customer-detail div */
+
+#add-customer-detail {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: lightblue;
+}
+
+#add-customer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+table td {
+    padding: 10px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#add-customer-submit {
+    background-color: lightblue;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* add-customer-detail div */

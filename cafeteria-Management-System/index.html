@@ -1,60 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <title>Sidebar Menu</title>
-    <style>
-        /* Styling for the sidebar */
-.sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    padding-top: 20px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar li {
-    margin-bottom: 10px;
-}
-
-.sidebar a {
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    padding: 10px;
-}
-
-/* Styling for the content */
-.content {
-    margin-left: 260px; /* Adjust this to match the width of the sidebar */
-    padding: 20px;
-}
-
-    </style>
 </head>
+
 <body>
     <div class="sidebar">
+
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#">DASHBOARD</a></li>
+
+            <li class="dropdown">
+                <a href="#">CUSTOMER</a>
+                <div class="dropdown-content">
+                    <a href="#">ADD CUSTOMER</a>
+                    <a href="#">MANAGE CUSTOMER</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="#">FOOD CATEGORY</a>
+                <div class="dropdown-content">
+                    <a href="#">ADD CATEGORY</a>
+                    <a href="#">MANAGE CATEGORY</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="#">FOOD</a>
+                <div class="dropdown-content">
+                    <a href="#">ADD FOOD</a>
+                    <a href="#">MANAGE FOOD</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">INVOICE</a>
+                <div class="dropdown-content">
+                    <a href="#">ADD INVOICE</a>
+                    <a href="#">MANAGE INVOICE</a>
+                </div>
+            </li>
+
+
         </ul>
     </div>
+    <!-- add-customer-detail div -->
+    <div id="add-customer-detail">
+
+        <form id="add-customer" action="#" method="post">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="name" required></td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td>
+                        <input type="radio" name="gender" value="Male" id="male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" name="gender" value="Female" id="female" required>
+                        <label for="female">Female</label>
+                        <input type="radio" name="gender" value="Other" id="other" required>
+                        <label for="other">Other</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mobile:</td>
+                    <td><input type="text" name="mobile" required></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><textarea name="address" rows="4" required></textarea></td>
+                </tr>
+            </table>
+            <input id="add-customer-submit" type="submit" value="Submit">
+        </form>
+    </div>
+    <!-- add-customer-detail div -->
     <div class="content">
         <!-- Your main content goes here -->
         <h1>Welcome to my website</h1>
         <p>This is the main content of the page.</p>
     </div>
 </body>
+
 </html>
