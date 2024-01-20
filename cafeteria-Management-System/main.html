@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Sidebar Menu</title>
     <script src="script.js"></script>
 </head>
 
 <body>
     <div class="sidebar">
-        <img src="logo.png" height="100px" width="300px" alt="">
-        <h2 style="color: aliceblue;" align="right"> Cafe And Retreat</h2>
+        <h2 style="color: aliceblue;" align="center"> Cafe And Retreat</h2>
         <ul>
-            <li class="dropdown"><a href="#">DASHBOARD</a></li>
+            <li class="dropdown"><a href="#" onclick=myCafe.showDashboard()>DASHBOARD</a></li>
 
             <li class="dropdown">
                 <a href="#">CUSTOMER</a>
                 <div class="dropdown-content">
                     <a href="#" onclick=myCafe.onClickOfAddCustomerDetail()>ADD CUSTOMER</a>
-                    <a href="#">MANAGE CUSTOMER</a>
+                    <a href="#" onclick=myCafe.onClickOfManageCustomerDetail()>MANAGE CUSTOMER</a>
                 </div>
             </li>
 
@@ -28,7 +28,7 @@
                 <a href="#">FOOD CATEGORY</a>
                 <div class="dropdown-content">
                     <a href="#" onclick=myCafe.onClickOfAddFoodCategory()>ADD CATEGORY</a>
-                    <a href="#">MANAGE CATEGORY</a>
+                    <a href="#" onclick=myCafe.onClickOfmanageFoodCategory()>MANAGE CATEGORY</a>
                 </div>
             </li>
 
@@ -36,14 +36,14 @@
                 <a href="#">FOOD</a>
                 <div class="dropdown-content">
                     <a href="#" onclick=myCafe.onClickOfAddFoodItem()>ADD FOOD</a>
-                    <a href="#">MANAGE FOOD</a>
+                    <a href="#" onclick=myCafe.onClickOfManageFoodItem()>MANAGE FOOD</a>
                 </div>
             </li>
             <li class="dropdown">
                 <a href="#">INVOICE</a>
                 <div class="dropdown-content">
-                    <a href="#">ADD INVOICE</a>
-                    <a href="#">MANAGE INVOICE</a>
+                    <a href="#" onclick=myCafe.onClickOfAddInvoice()>ADD INVOICE</a>
+                    <a href="#" onclick=myCafe.onClickOfManageInvoice()>MANAGE INVOICE</a>
                 </div>
             </li>
         </ul>
@@ -55,13 +55,37 @@
         <div id="add-customer-detail"></div>
         <!-- add-customer-detail div END -->
 
+        <!-- manage-customer-detail div START-->
+        <div id="manage-customer-detail">
+            
+            <!-- Pagination here -->
+        </div>
+
+        <!-- manage-customer-detail div END -->
+
         <!-- add-food-category div START -->
         <div id="add-food-category"></div>
         <!-- add-food-category div END -->
 
+        <!-- manage-food-category div START -->
+        <div id="manage-food-category"></div>
+        <!-- manage-food-category div END -->
+
         <!-- add-food-item div START -->
         <div id="add-food-item"></div>
         <!-- add-food-item div END -->
+
+        <!-- manage-food-item div START -->
+        <div id="manage-food-item"></div>
+        <!-- manage-food-item div END -->
+
+        <!-- add-invoice div START -->
+        <div id="add-invoice"></div>
+        <!-- add-invoice div END -->
+
+        <!-- manage-invoice div START -->
+        <div id="manage-invoice"></div>
+        <!-- manage-invoice div END -->
 
     </div>
 
