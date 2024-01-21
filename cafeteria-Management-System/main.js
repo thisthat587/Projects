@@ -1,18 +1,22 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, screen } = require('electron');
 
-function createWindow(htmlfile, w, h) {
+function createWindow() {
+    // Get the size of the primary display
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
     const mainWindow = new BrowserWindow({
-        width: w,
-        height: h,
+        width: width,
+        height: height,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             webSecurity: false,
         },
     });
-    mainWindow.loadFile(htmlfile);
+    mainWindow.setMenuBarVisibility(false);
+    mainWindow.loadFile("main.html");
 }
 
 app.whenReady().then(() => {
-    createWindow("main.html", 375, 667);
+    createWindow();
 });

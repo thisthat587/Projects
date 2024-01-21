@@ -2,28 +2,28 @@ const mysql = require('mysql2');
 
 // Create a connection to the database
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'mydb'
+    host: 'localhost',
+    user: 'root',
+    password: '1234',
+    database: 'mydb'
 });
 
 // Connect to the database
 connection.connect(error => {
-  if (error) {
-    return console.error('error: ' + error.message);
-  }
-  console.log('Connected to the MySQL server.');
+    if (error) {
+        return console.error('error: ' + error.message);
+    }
+    console.log('Connected to the MySQL server.');
 });
 
 // Perform queries
 const queryString = `SELECT * FROM students`;
 connection.query(queryString, (error, results) => {
-  if (error) {
-    return console.error('Error executing query: ' + error.message);
-  }
-  // Process the result
-  console.log(results);
+    if (error) {
+        return console.error('Error executing query: ' + error.message);
+    }
+    // Process the result
+    console.log(results);
 });
 
 // Close the connection
@@ -86,7 +86,7 @@ class cafe {
         document.getElementById('manage-customer-detail').innerHTML =
             `
             <h2><u>View Customers</u></h2>
-            <button class="add-client-btn">Add Client</button>
+            <button class="add-client-btn" onclick=myCafe.onClickOfAddCustomerDetail()>Add New Customer</button>
             <table id="manage-customer">
                 <thead>
                     <tr>
@@ -162,7 +162,7 @@ class cafe {
         document.getElementById('manage-food-category').innerHTML =
             `
             <h2><u>View Food Categories</u></h2>
-            <button class="add-client-btn">Add Category</button>
+            <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodCategory()>Add New Category</button>
             <table id="manage-customer">
                 <thead>
                     <tr>
@@ -252,7 +252,7 @@ class cafe {
         document.getElementById('manage-food-item').innerHTML =
             `
             <h2><u>View Food Items</u></h2>
-            <button class="add-client-btn">Add Client</button>
+            <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodItem()>Add New Food Item</button>
             <table id="manage-customer">
                 <thead>
                     <tr>
