@@ -1,4 +1,33 @@
-const mysql=require('mysql');
+const mysql = require('mysql2');
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '1234',
+  database: 'mydb'
+});
+
+// Connect to the database
+connection.connect(error => {
+  if (error) {
+    return console.error('error: ' + error.message);
+  }
+  console.log('Connected to the MySQL server.');
+});
+
+// Perform queries
+const queryString = `SELECT * FROM students`;
+connection.query(queryString, (error, results) => {
+  if (error) {
+    return console.error('Error executing query: ' + error.message);
+  }
+  // Process the result
+  console.log(results);
+});
+
+// Close the connection
+connection.end();
 
 class cafe {
 

@@ -1,0 +1,14 @@
+{
+  "name": "Cafeteria-management-application",
+  "version": "1.0.0",
+  "description": "all the projects  and its files",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "piyush singh",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^3.7.1"
+  }
+}
