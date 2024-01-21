@@ -1,39 +1,57 @@
 const mysql = require('mysql2');
 
 // Create a connection to the database
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'mydb'
-});
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '1234',
+//     database: 'mydb'
+// });
 
 // Connect to the database
-connection.connect(error => {
-    if (error) {
-        return console.error('error: ' + error.message);
-    }
-    console.log('Connected to the MySQL server.');
-});
+// connection.connect(error => {
+//     if (error) {
+//         return console.error('error: ' + error.message);
+//     }
+//     console.log('Connected to the MySQL server.');
+// });
 
 // Perform queries
-const queryString = `SELECT * FROM students`;
-connection.query(queryString, (error, results) => {
-    if (error) {
-        return console.error('Error executing query: ' + error.message);
-    }
-    // Process the result
-    console.log(results);
-});
+// const queryString = `SELECT * FROM students`;
+// connection.query(queryString, (error, results) => {
+//     if (error) {
+//         return console.error('Error executing query: ' + error.message);
+//     }
+//     // Process the result
+//     console.log(results);
+// });
 
 // Close the connection
-connection.end();
+// connection.end();
 
 class cafe {
+    #queryString;
+    #connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '1234',
+        database: 'cafe'
+    });
 
     constructor() {
 
     }
+
+    async getData() {
+        try {
+            const data = await this.#connection.promise().query(this.#queryString);
+            return data[0];
+        } catch (error) {
+            console.error("Error esecuting query.....");
+            return;
+        }
+    }
+
 
     onClickOfAddCustomerDetail() {
         document.getElementById('add-food-item').style.display = 'none';
@@ -77,13 +95,17 @@ class cafe {
     }
 
     onClickOfManageCustomerDetail() {
-        document.getElementById('add-customer-detail').style.display = 'none';
-        document.getElementById('add-food-item').style.display = 'none';
-        document.getElementById('add-food-category').style.display = 'none';
-        document.getElementById('manage-food-item').style.display = 'none';
-        document.getElementById('manage-food-category').style.display = 'none';
-        document.getElementById('manage-customer-detail').style.display = 'block';
-        document.getElementById('manage-customer-detail').innerHTML =
+
+        this.#queryString = `select * from customers`;
+        const customerData = this.getData();
+        // this.#connection.query(this.#queryString, (error, result) => {
+        //     if (error) {
+        //         return console.error('Error executing query.....');
+        //     }
+        //     customerData = result;
+        // })
+        console.log(customerData);
+        const manageCustomerDetailHtml =
             `
             <h2><u>View Customers</u></h2>
             <button class="add-client-btn" onclick=myCafe.onClickOfAddCustomerDetail()>Add New Customer</button>
@@ -102,7 +124,7 @@ class cafe {
                 <tbody>
                     <tr>
                         <td id="customer-manage-td-th">1</td>
-                        <td id="customer-manage-td-th">Rammolli Kallathil</td>
+                        <td id="customer-manage-td-th">${customerData[0].name}</td>
                         <td id="customer-manage-td-th">Male</td>
                         <td id="customer-manage-td-th">8090809080</td>
                         <td id="customer-manage-td-th">Subodh</td>
@@ -117,7 +139,15 @@ class cafe {
                     <!-- More rows here -->
                 </tbody>
             </table>
-            `;
+            `
+            ;
+        document.getElementById('add-customer-detail').style.display = 'none';
+        document.getElementById('add-food-item').style.display = 'none';
+        document.getElementById('add-food-category').style.display = 'none';
+        document.getElementById('manage-food-item').style.display = 'none';
+        document.getElementById('manage-food-category').style.display = 'none';
+        document.getElementById('manage-customer-detail').style.display = 'block';
+        document.getElementById('manage-customer-detail').innerHTML = manageCustomerDetailHtml;
     }
 
     onClickOfAddFoodCategory() {
