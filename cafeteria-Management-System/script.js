@@ -1,3 +1,5 @@
+const mysql=require('mysql');
+
 class cafe {
 
     constructor() {
@@ -54,7 +56,7 @@ class cafe {
         document.getElementById('manage-customer-detail').style.display = 'block';
         document.getElementById('manage-customer-detail').innerHTML =
             `
-            <h2><u>View Client</u></h2>
+            <h2><u>View Customers</u></h2>
             <button class="add-client-btn">Add Client</button>
             <table id="manage-customer">
                 <thead>
@@ -130,7 +132,7 @@ class cafe {
         document.getElementById('manage-food-category').style.display = 'block';
         document.getElementById('manage-food-category').innerHTML =
             `
-            <h2><u>View Food Category</u></h2>
+            <h2><u>View Food Categories</u></h2>
             <button class="add-client-btn">Add Category</button>
             <table id="manage-customer">
                 <thead>
@@ -220,7 +222,7 @@ class cafe {
         document.getElementById('manage-food-item').style.display = 'block';
         document.getElementById('manage-food-item').innerHTML =
             `
-            <h2><u>View Client</u></h2>
+            <h2><u>View Food Items</u></h2>
             <button class="add-client-btn">Add Client</button>
             <table id="manage-customer">
                 <thead>
