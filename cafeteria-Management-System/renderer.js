@@ -42,16 +42,6 @@ class cafe {
 
     }
 
-    async getData() {
-        try {
-            const data = await this.#connection.promise().query(this.#queryString);
-            return data[0];
-        } catch (error) {
-            console.error("Error esecuting query.....");
-            return;
-        }
-    }
-
 
     onClickOfAddCustomerDetail() {
         document.getElementById('add-food-item').style.display = 'none';
@@ -95,23 +85,29 @@ class cafe {
     }
 
     onClickOfManageCustomerDetail() {
+        document.getElementById('add-customer-detail').style.display = 'none';
+        document.getElementById('add-food-item').style.display = 'none';
+        document.getElementById('add-food-category').style.display = 'none';
+        document.getElementById('manage-food-item').style.display = 'none';
+        document.getElementById('manage-food-category').style.display = 'none';
+        document.getElementById('manage-customer-detail').style.display = 'block';
 
         this.#queryString = `select * from customers`;
-        const customerData = this.getData();
-        // this.#connection.query(this.#queryString, (error, result) => {
-        //     if (error) {
-        //         return console.error('Error executing query.....');
-        //     }
-        //     customerData = result;
-        // })
-        console.log(customerData);
-        const manageCustomerDetailHtml =
-            `
-            <h2><u>View Customers</u></h2>
-            <button class="add-client-btn" onclick=myCafe.onClickOfAddCustomerDetail()>Add New Customer</button>
-            <table id="manage-customer">
-                <thead>
-                    <tr>
+        try {
+            this.#connection.query(this.#queryString, (error, result) => {
+                if (error) {
+                    console.error("Error executing query.....");
+                    return;
+                }
+                const customerData = result;
+                console.log(customerData);
+                let manageCustomerDetailHtml =
+                    `
+                        <h2><u>View Customers</u></h2>
+                        <button class="add-client-btn" onclick=myCafe.onClickOfAddCustomerDetail()>Add New Customer</button>
+                        <table id="manage-customer">
+                        <thead>
+                        <tr>
                         <th id="customer-manage-td-th">#</th>
                         <th id="customer-manage-td-th">Client Name</th>
                         <th id="customer-manage-td-th">Gender</th>
@@ -119,35 +115,44 @@ class cafe {
                         <th id="customer-manage-td-th">Referring</th>
                         <th id="customer-manage-td-th">Address</th>
                         <th id="customer-manage-td-th">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="customer-manage-td-th">1</td>
-                        <td id="customer-manage-td-th">${customerData[0].name}</td>
-                        <td id="customer-manage-td-th">Male</td>
-                        <td id="customer-manage-td-th">8090809080</td>
-                        <td id="customer-manage-td-th">Subodh</td>
-                        <td id="customer-manage-td-th">Old Kanakapura Rd, Basavanagudi, Bengaluru, Karnataka</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                    `
+                    ;
+
+                for (let i = 0; i < customerData.length; i++) {
+                    manageCustomerDetailHtml +=
+                        `
+                        <tr>
+                        <td id="customer-manage-td-th">${customerData[i].id}</td>
+                        <td id="customer-manage-td-th">${customerData[i].name}</td>
+                        <td id="customer-manage-td-th">${customerData[i].gen}</td>
+                        <td id="customer-manage-td-th">${customerData[i].mobile}</td>
+                        <td id="customer-manage-td-th">${customerData[i].referring}</td>
+                        <td id="customer-manage-td-th">${customerData[i].address}</td>
                         <td id="customer-manage-td-th">
-                            <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-pencil-alt"></i>
-                            <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-trash-alt"></i>
+                        <i id="${i}" style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                        class="fas fa-pencil-alt"></i>
+                        <i id="${i}" style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                        class="fas fa-trash-alt"></i>
                         </td>
-                    </tr>
-                    <!-- More rows here -->
-                </tbody>
-            </table>
-            `
-            ;
-        document.getElementById('add-customer-detail').style.display = 'none';
-        document.getElementById('add-food-item').style.display = 'none';
-        document.getElementById('add-food-category').style.display = 'none';
-        document.getElementById('manage-food-item').style.display = 'none';
-        document.getElementById('manage-food-category').style.display = 'none';
-        document.getElementById('manage-customer-detail').style.display = 'block';
-        document.getElementById('manage-customer-detail').innerHTML = manageCustomerDetailHtml;
+                        </tr>
+                    `
+                }
+                manageCustomerDetailHtml +=
+                    `
+                        </tbody>
+                        </table>
+                    `
+                document.getElementById('manage-customer-detail').innerHTML = manageCustomerDetailHtml;
+                // this.#connection.end();
+            });
+        } catch (error) {
+            console.error("Error eXecuting query.....");
+            return;
+        }
     }
 
     onClickOfAddFoodCategory() {
@@ -189,35 +194,57 @@ class cafe {
         document.getElementById('manage-food-item').style.display = 'none';
         document.getElementById('add-customer-detail').style.display = 'none';
         document.getElementById('manage-food-category').style.display = 'block';
-        document.getElementById('manage-food-category').innerHTML =
-            `
-            <h2><u>View Food Categories</u></h2>
-            <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodCategory()>Add New Category</button>
-            <table id="manage-customer">
-                <thead>
+        this.#queryString = 'select * from foodcategorylist';
+
+        try {
+            this.#connection.query(this.#queryString, (error, result) => {
+                if (error) {
+                    console.error("Error executing query.....");
+                }
+
+                const foodCategoryData = result;
+                let manageFoodCategoryHtml =
+                    `
+                    <h2><u>View Food Categories</u></h2>
+                    <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodCategory()>Add New Category</button>
+                    <table id="manage-customer">
+                    <thead>
                     <tr>
-                        <th id="customer-manage-td-th">#</th>
-                        <th id="customer-manage-td-th">Category Name</th>
-                        <th id="customer-manage-td-th">Status</th>
-                        <th id="customer-manage-td-th">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="customer-manage-td-th">1</td>
-                        <td id="customer-manage-td-th">Sweet</td>
-                        <td id="customer-manage-td-th">Available</td>
+                            <th id="customer-manage-td-th">#</th>
+                            <th id="customer-manage-td-th">Category Name</th>
+                            <th id="customer-manage-td-th">Status</th>
+                            <th id="customer-manage-td-th">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    `;
+                for (let i = 0; i < foodCategoryData.length; i++) {
+                    manageFoodCategoryHtml +=
+                        `
+                        <tr>
+                        <td id="customer-manage-td-th">${foodCategoryData[i].id}</td>
+                        <td id="customer-manage-td-th">${foodCategoryData[i].name}</td>
+                        <td id="customer-manage-td-th">${foodCategoryData[i].status}</td>
                         <td id="customer-manage-td-th">
-                            <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                        <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                 class="fas fa-pencil-alt"></i>
                             <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-trash-alt"></i>
+                            class="fas fa-trash-alt"></i>
                         </td>
                     </tr>
-                    <!-- More rows here -->
-                </tbody>
-            </table>
-            `;
+                    `;
+                }
+                manageFoodCategoryHtml +=
+                    `
+                    </tbody>
+                    </table>
+                    `;
+                document.getElementById('manage-food-category').innerHTML = manageFoodCategoryHtml;
+                // this.#connection.end();
+            });
+        } catch (error) {
+            console.error('Some error occured.....');
+        }
 
     }
 
@@ -279,39 +306,57 @@ class cafe {
         document.getElementById('manage-food-category').style.display = 'none';
         document.getElementById('manage-customer-detail').style.display = 'none';
         document.getElementById('manage-food-item').style.display = 'block';
-        document.getElementById('manage-food-item').innerHTML =
-            `
-            <h2><u>View Food Items</u></h2>
-            <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodItem()>Add New Food Item</button>
-            <table id="manage-customer">
-                <thead>
-                    <tr>
+        this.#queryString = 'select * from fooditemList';
+        try {
+            this.#connection.query(this.#queryString, (error, result) => {
+                if (error) {
+                    console.error("Error executing query.....")
+                }
+                const foodItemData = result;
+                let manageFoodItemHtml =
+                    `
+                        <h2><u>View Food Items</u></h2>
+                        <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodItem()>Add New Food Item</button>
+                        <table id="manage-customer">
+                        <thead>
+                        <tr>
                         <th id="customer-manage-td-th">#</th>
                         <th id="customer-manage-td-th">Food Name</th>
-                        <th id="customer-manage-td-th">Rate</th>
-                        <th id="customer-manage-td-th">Category</th>
-                        <th id="customer-manage-td-th">Status</th>
-                        <th id="customer-manage-td-th">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="customer-manage-td-th">1</td>
-                        <td id="customer-manage-td-th">Gulab Jamun</td>
-                        <td id="customer-manage-td-th">25</td>
-                        <td id="customer-manage-td-th">Sweet</td>
-                        <td id="customer-manage-td-th">Available</td>
-                        <td id="customer-manage-td-th">
-                            <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-pencil-alt"></i>
-                            <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-trash-alt"></i>
-                        </td>
-                    </tr>
-                    <!-- More rows here -->
-                </tbody>
-            </table>
-            `;
+                                <th id="customer-manage-td-th">Rate</th>
+                                <th id="customer-manage-td-th">Category</th>
+                                <th id="customer-manage-td-th">Status</th>
+                                <th id="customer-manage-td-th">Action</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                    `;
+                manageFoodItemHtml =
+                    `
+                        <tr>
+                                <td id="customer-manage-td-th">1</td>
+                                <td id="customer-manage-td-th">Gulab Jamun</td>
+                                <td id="customer-manage-td-th">25</td>
+                                <td id="customer-manage-td-th">Sweet</td>
+                                <td id="customer-manage-td-th">Available</td>
+                                <td id="customer-manage-td-th">
+                                    <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                                        class="fas fa-pencil-alt"></i>
+                                    <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                                        class="fas fa-trash-alt"></i>
+                                        </td>
+                        </tr>
+                    `;
+                manageFoodItemHtml =
+                    `
+                        </tbody>
+                        </table>
+                    `;
+                document.getElementById('manage-food-item').innerHTML = manageFoodItemHtml;
+
+            });
+        } catch (error) {
+            console.log("Some error Occured.....");
+        }
     }
 
     onClickOfAddInvoice() {
