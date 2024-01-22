@@ -1,34 +1,5 @@
 const mysql = require('mysql2');
 
-// Create a connection to the database
-// const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '1234',
-//     database: 'mydb'
-// });
-
-// Connect to the database
-// connection.connect(error => {
-//     if (error) {
-//         return console.error('error: ' + error.message);
-//     }
-//     console.log('Connected to the MySQL server.');
-// });
-
-// Perform queries
-// const queryString = `SELECT * FROM students`;
-// connection.query(queryString, (error, results) => {
-//     if (error) {
-//         return console.error('Error executing query: ' + error.message);
-//     }
-//     // Process the result
-//     console.log(results);
-// });
-
-// Close the connection
-// connection.end();
-
 class cafe {
     #queryString;
     #connection = mysql.createConnection({
@@ -41,7 +12,6 @@ class cafe {
     constructor() {
 
     }
-
 
     onClickOfAddCustomerDetail() {
         document.getElementById('add-food-item').style.display = 'none';
@@ -57,35 +27,55 @@ class cafe {
                 <table>
                     <tr>
                         <td id="td-padding">Name </td>
-                        <td id="td-padding"><input type="text" name="name" required></td>
+                        <td id="td-padding"><input id="cname" type="text" name="name" required></td>
                     </tr>
                     <tr>
                         <td id="td-padding">Gender </td>
                         <td id="td-padding">
-                            <select name="category" required>
+                            <select id="cgen" name="category" required>
                                 <option value="" disabled selected>--SELECT--</option>
-                                <option value="category1">MALE</option>
-                                <option value="category2">FEMALE</option>
-                                <option value="category3">OTHER</option>
+                                <option>MALE</option>
+                                <option>FEMALE</option>
+                                <option>OTHER</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td id="td-padding">Mobile </td>
-                        <td id="td-padding"><input type="text" name="mobile" required></td>
+                        <td id="td-padding"><input id="cmobile" type="text" name="mobile" required></td>
                     </tr>
                     <tr>
                         <td id="td-padding">Referred By </td>
-                        <td id="td-padding"><input type="text" name="referring" required></td>
+                        <td id="td-padding"><input id="crefer" type="text" name="referring" required></td>
                     </tr>
                     <tr>
                         <td id="td-padding">Address </td>
-                        <td id="td-padding"><textarea name="address" rows="4" required></textarea></td>
+                        <td id="td-padding"><textarea id="caddress" name="address" rows="4" required></textarea></td>
                     </tr>
-                </table>
-                <input id="add-customer-submit" type="submit" value="Submit">
-            </form>
-            `;
+                    </table>
+                    <input id="add-customer-submit" type="submit" value="Submit">
+                    </form>
+                    `;
+        // <button id="add-customer-submit">Submit</button>
+
+        document.getElementById('add-customer-submit').addEventListener('click', () => {
+            const cName = document.getElementById('cname').value;
+            const cGen = document.getElementById('cgen').value;
+            const cMobile = document.getElementById('cmobile').value;
+            const cRefer = document.getElementById('crefer').value;
+            const cAddress = document.getElementById('caddress').value;
+
+            this.#queryString = `INSERT INTO customers (name, gen, mobile, referring, address) VALUES (?, ?, ?, ?, ?)`;
+            const values = [cName, cGen, cMobile, cRefer, cAddress];
+
+            this.#connection.query(this.#queryString, values, (error, result) => {
+                if (error) {
+                    return console.error('Error executing query: ' + error.message);
+                }
+                // Query executed successfully
+                console.log('Query result:', result);
+            });
+        });
     }
 
     onClickOfManageCustomerDetail() {
@@ -172,15 +162,15 @@ class cafe {
                 <table>
                     <tr>
                         <td id="td-padding">Category Name </td>
-                        <td id="td-padding"><input type="text" name="name" required></td>
+                        <td id="td-padding"><input id="fcname" type="text" name="name" required></td>
                     </tr>
                     <tr>
                         <td id="td-padding">Status </td>
                         <td id="td-padding">
-                            <select name="status" required>
-                                <option value="" disabled selected>--SELECT--</option>
-                                <option value="active">AVAILABLE</option>
-                                <option value="inactive">UNAVAILABLE</option>
+                            <select id="fcstatus" name="status" required>
+                                <option>--SELECT--</option>
+                                <option>AVAILABLE</option>
+                                <option>UNAVAILABLE</option>
                             </select>
                         </td>
                     </tr>
@@ -188,6 +178,19 @@ class cafe {
                 <input id="add-food-submit" type="submit" value="Submit">
             </form>
             `;
+        document.getElementById('add-food-submit').addEventListener('click', () => {
+            const fcName = document.getElementById('fcname').value;
+            const fcStatus = document.getElementById('fcstatus').value;
+            const values = [fcName, fcStatus];
+            this.#queryString = `insert into foodcategorylist(name,status) values (?,?)`
+
+            this.#connection.query(this.#queryString, values, (error, result) => {
+                if (error) {
+                    return console.error("Error executing query.....");
+                }
+                console.log(result);
+            });
+        });
     }
 
     onClickOfmanageFoodCategory() {
