@@ -58,7 +58,8 @@ class cafe {
                     `;
         // <button id="add-customer-submit">Submit</button>
 
-        document.getElementById('add-customer-submit').addEventListener('click', () => {
+        document.getElementById('add-customer-submit').addEventListener('click', (event) => {
+            event.preventDefault();
             const cName = document.getElementById('cname').value;
             const cGen = document.getElementById('cgen').value;
             const cMobile = document.getElementById('cmobile').value;
@@ -119,7 +120,7 @@ class cafe {
                     manageCustomerDetailHtml +=
                         `
                         <tr>
-                        <td id="customer-manage-td-th">${customerData[i].id}</td>
+                        <td id="customer-manage-td-th">${i + 1}</td>
                         <td id="customer-manage-td-th">${customerData[i].name}</td>
                         <td id="customer-manage-td-th">${customerData[i].gen}</td>
                         <td id="customer-manage-td-th">${customerData[i].mobile}</td>
@@ -178,10 +179,13 @@ class cafe {
                 <input id="add-food-submit" type="submit" value="Submit">
             </form>
             `;
-        document.getElementById('add-food-submit').addEventListener('click', () => {
+        document.getElementById('add-food-submit').addEventListener('click', (event) => {
+            event.preventDefault();
+
             const fcName = document.getElementById('fcname').value;
             const fcStatus = document.getElementById('fcstatus').value;
             const values = [fcName, fcStatus];
+            document.getElementById('add-category').reset();
             this.#queryString = `insert into foodcategorylist(name,status) values (?,?)`
 
             this.#connection.query(this.#queryString, values, (error, result) => {
@@ -228,7 +232,7 @@ class cafe {
                     manageFoodCategoryHtml +=
                         `
                         <tr>
-                        <td id="customer-manage-td-th">${foodCategoryData[i].id}</td>
+                        <td id="customer-manage-td-th">${i + 1}</td>
                         <td id="customer-manage-td-th">${foodCategoryData[i].name}</td>
                         <td id="customer-manage-td-th">${foodCategoryData[i].status}</td>
                         <td id="customer-manage-td-th">
@@ -303,6 +307,10 @@ class cafe {
             <input id="add-food-submit" type="submit" value="Submit">
             </form>
             `;
+
+        document.getElementById('addd-food-submit').addEventListener('click', (event) => {
+            event.preventDefault();
+        })
     }
 
     onClickOfManageFoodItem() {
@@ -341,7 +349,7 @@ class cafe {
                     manageFoodItemHtml +=
                         `
                             <tr>
-                                <td id="customer-manage-td-th">${foodItemData[i].id}</td>
+                                <td id="customer-manage-td-th">${i + 1}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].name}</td>
                                 <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].category}</td>
