@@ -75,6 +75,10 @@ class cafe {
                         <td id="td-padding"><input type="text" name="mobile" required></td>
                     </tr>
                     <tr>
+                        <td id="td-padding">Referred By </td>
+                        <td id="td-padding"><input type="text" name="referring" required></td>
+                    </tr>
+                    <tr>
                         <td id="td-padding">Address </td>
                         <td id="td-padding"><textarea name="address" rows="4" required></textarea></td>
                     </tr>
@@ -100,7 +104,6 @@ class cafe {
                     return;
                 }
                 const customerData = result;
-                console.log(customerData);
                 let manageCustomerDetailHtml =
                     `
                         <h2><u>View Customers</u></h2>
@@ -306,7 +309,7 @@ class cafe {
         document.getElementById('manage-food-category').style.display = 'none';
         document.getElementById('manage-customer-detail').style.display = 'none';
         document.getElementById('manage-food-item').style.display = 'block';
-        this.#queryString = 'select * from fooditemList';
+        this.#queryString = 'select * from fooditemlist';
         try {
             this.#connection.query(this.#queryString, (error, result) => {
                 if (error) {
@@ -320,33 +323,36 @@ class cafe {
                         <table id="manage-customer">
                         <thead>
                         <tr>
-                        <th id="customer-manage-td-th">#</th>
-                        <th id="customer-manage-td-th">Food Name</th>
-                                <th id="customer-manage-td-th">Rate</th>
-                                <th id="customer-manage-td-th">Category</th>
-                                <th id="customer-manage-td-th">Status</th>
-                                <th id="customer-manage-td-th">Action</th>
-                                </tr>
+                            <th id="customer-manage-td-th">#</th>
+                            <th id="customer-manage-td-th">Food Name</th>
+                            <th id="customer-manage-td-th">Rate</th>
+                            <th id="customer-manage-td-th">Category</th>
+                            <th id="customer-manage-td-th">Status</th>
+                            <th id="customer-manage-td-th">Action</th>
+                        </tr>
                         </thead>
                         <tbody>
                     `;
-                manageFoodItemHtml =
-                    `
-                        <tr>
-                                <td id="customer-manage-td-th">1</td>
-                                <td id="customer-manage-td-th">Gulab Jamun</td>
-                                <td id="customer-manage-td-th">25</td>
-                                <td id="customer-manage-td-th">Sweet</td>
-                                <td id="customer-manage-td-th">Available</td>
+                for (let i = 0; i < foodItemData.length; i++) {
+
+                    manageFoodItemHtml +=
+                        `
+                            <tr>
+                                <td id="customer-manage-td-th">${foodItemData[i].id}</td>
+                                <td id="customer-manage-td-th">${foodItemData[i].name}</td>
+                                <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate}</td>
+                                <td id="customer-manage-td-th">${foodItemData[i].category}</td>
+                                <td id="customer-manage-td-th">${foodItemData[i].status}</td>
                                 <td id="customer-manage-td-th">
                                     <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                         class="fas fa-pencil-alt"></i>
                                     <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                        class="fas fa-trash-alt"></i>
-                                        </td>
-                        </tr>
-                    `;
-                manageFoodItemHtml =
+                                    class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                        `;
+                }
+                manageFoodItemHtml +=
                     `
                         </tbody>
                         </table>

@@ -30,3 +30,4 @@ const data = getCustomerData();
 console.log(data)
 // Close the connection
 connection.end();
+
