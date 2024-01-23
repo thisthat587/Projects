@@ -272,20 +272,20 @@ class cafe {
             <table>
                 <tr>
                     <td id="td-padding">Name </td>
-                    <td id="td-padding"><input type="text" name="name" required></td>
+                    <td id="td-padding"><input id="fname" type="text" name="name" required></td>
                 </tr>
                 <tr>
                 <td id="td-padding">Quantity </td>
-                    <td id="td-padding"><input type="text" name="quantity"  required></td>
+                    <td id="td-padding"><input id="fquan" type="text" name="quantity"  required></td>
                 </tr>
                 <tr>
                     <td id="td-padding">Rate </td>
-                    <td id="td-padding"><input type="text" name="rate" required></td>
+                    <td id="td-padding"><input id="frate" type="text" name="rate" required></td>
                 </tr>
                 <tr>
                     <td id="td-padding">Category Name </td>
                     <td id="td-padding">
-                        <select name="category" required>
+                        <select id="fcategory" name="category" required>
                             <option value="" disabled selected>--SELECT--</option>
                             <option value="category1">Category 1</option>
                             <option value="category2">Category 2</option>
@@ -296,10 +296,10 @@ class cafe {
                 <tr>
                 <td id="td-padding">Status  </td>
                     <td id="td-padding">
-                        <select name="status" required>
-                            <option value="" disabled selected>--SELECT--</option>
-                            <option value="active">AVAILABLE</option>
-                            <option value="inactive">UNAVAILABLE</option>
+                        <select id="fstatus" name="status" required>
+                            <option>--SELECT--</option>
+                            <option>AVAILABLE</option>
+                            <option>UNAVAILABLE</option>
                         </select>
                         </td>
                 </tr>
@@ -310,6 +310,21 @@ class cafe {
 
         document.getElementById('addd-food-submit').addEventListener('click', (event) => {
             event.preventDefault();
+            const fName = document.getElementById('fname').value;
+            const fRate = document.getElementById('frate').value;
+            const fCategory = document.getElementById('fcategory').value;
+            const fStatus = document.getElementById('fstatus').value;
+            const fQuan = document.getElementById('fquan').value;
+
+            const values = [fName, fRate, fCategory, fStatus, fQuan];
+            this.#queryString = `insert into fooditemlist (name,rate,category,status,quantity) values (?,?,?,?,?)`;
+            this.#connection.query(this.#queryString, values, (error, result) => {
+                if (error) {
+                    return console.error("Error executing query.....");
+                }
+                console.log(result)
+            });
+
         })
     }
 
@@ -336,6 +351,7 @@ class cafe {
                         <tr>
                             <th id="customer-manage-td-th">#</th>
                             <th id="customer-manage-td-th">Food Name</th>
+                            <th id="customer-manage-td-th">Quantity</th>
                             <th id="customer-manage-td-th">Rate</th>
                             <th id="customer-manage-td-th">Category</th>
                             <th id="customer-manage-td-th">Status</th>
@@ -351,6 +367,7 @@ class cafe {
                             <tr>
                                 <td id="customer-manage-td-th">${i + 1}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].name}</td>
+                                <td id="customer-manage-td-th">${foodItemData[i].quantity}</td>
                                 <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].category}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].status}</td>
