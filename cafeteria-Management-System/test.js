@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 });
 
 // Perform queries
-const queryString = `SELECT * FROM customers`;
+const queryString = `SELECT name FROM foodcategorylist`;
 
 async function getCustomerData() {
     try {
@@ -17,7 +17,7 @@ async function getCustomerData() {
         // for (let i = 0; i< customerData[0].length; i++) {
         //     console.log(customerData[0][i]);
         // }
-        console.log(customerData[0]);
+        console.log(customerData[0][0]);
         return customerData;
 
     } catch (error) {

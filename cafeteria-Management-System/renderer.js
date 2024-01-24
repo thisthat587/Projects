@@ -229,12 +229,20 @@ class cafe {
                     <tbody>
                     `;
                 for (let i = 0; i < foodCategoryData.length; i++) {
+                    let color;
+                    const status = foodCategoryData[i].status.toUpperCase();
+                    if (status === 'AVAILABLE') {
+                        color = 'green';
+                    } else if (status === 'UNAVAILABLE') {
+                        color = 'red';
+                    }
+
                     manageFoodCategoryHtml +=
                         `
                         <tr>
                         <td id="customer-manage-td-th">${i + 1}</td>
                         <td id="customer-manage-td-th">${foodCategoryData[i].name}</td>
-                        <td id="customer-manage-td-th">${foodCategoryData[i].status}</td>
+                        <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                         <td id="customer-manage-td-th">
                         <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                 class="fas fa-pencil-alt"></i>
@@ -265,18 +273,18 @@ class cafe {
         document.getElementById('manage-food-category').style.display = 'none';
         document.getElementById('manage-food-item').style.display = 'none';
         document.getElementById('add-food-item').style.display = 'flex';
-        document.getElementById('add-food-item').innerHTML =
+        let addFoodItemHtml =
             `
-            <form id="add-food" action="#" method="post">
-            <h2><u>Add New Food Item </u></h2>
-            <table>
+        <form id="add-food" action="#" method="post">
+        <h2><u>Add New Food Item </u></h2>
+        <table>
                 <tr>
                     <td id="td-padding">Name </td>
                     <td id="td-padding"><input id="fname" type="text" name="name" required></td>
                 </tr>
                 <tr>
                 <td id="td-padding">Quantity </td>
-                    <td id="td-padding"><input id="fquan" type="text" name="quantity"  required></td>
+                <td id="td-padding"><input id="fquan" type="text" name="quantity"  required></td>
                 </tr>
                 <tr>
                     <td id="td-padding">Rate </td>
@@ -286,10 +294,23 @@ class cafe {
                     <td id="td-padding">Category Name </td>
                     <td id="td-padding">
                         <select id="fcategory" name="category" required>
-                            <option value="" disabled selected>--SELECT--</option>
-                            <option value="category1">Category 1</option>
-                            <option value="category2">Category 2</option>
-                            <option value="category3">Category 3</option>
+                            <option>--SELECT--</option>
+                        `;
+
+        this.#queryString = `select name from foodcategorylist`;
+        this.#connection.query(this.#queryString, (error, result) => {
+            const foorCategorySelectTag = document.getElementById('fcategory');
+            if (error) {
+                console.error("Error executing query.....");
+            }
+            for (let i = 0; i < result.length; i++) {
+                const option = document.createElement('option');
+                option.text = result[i].name;
+                foorCategorySelectTag.appendChild(option);
+            }
+        });
+
+        addFoodItemHtml += `
                             </select>
                     </td>
                 </tr>
@@ -298,8 +319,8 @@ class cafe {
                     <td id="td-padding">
                         <select id="fstatus" name="status" required>
                             <option>--SELECT--</option>
-                            <option>AVAILABLE</option>
-                            <option>UNAVAILABLE</option>
+                            <option>Available</option>
+                            <option>Unavailable</option>
                         </select>
                         </td>
                 </tr>
@@ -307,17 +328,18 @@ class cafe {
             <input id="add-food-submit" type="submit" value="Submit">
             </form>
             `;
+        document.getElementById('add-food-item').innerHTML = addFoodItemHtml;
 
-        document.getElementById('addd-food-submit').addEventListener('click', (event) => {
+        document.getElementById('add-food-submit').addEventListener('click', (event) => {
             event.preventDefault();
             const fName = document.getElementById('fname').value;
             const fRate = document.getElementById('frate').value;
             const fCategory = document.getElementById('fcategory').value;
             const fStatus = document.getElementById('fstatus').value;
             const fQuan = document.getElementById('fquan').value;
-
             const values = [fName, fRate, fCategory, fStatus, fQuan];
-            this.#queryString = `insert into fooditemlist (name,rate,category,status,quantity) values (?,?,?,?,?)`;
+            document.getElementById('add-food').reset();
+            this.#queryString = `insert into fooditemlist(name,rate,category,status,quantity) values (?,?,?,?,?)`;
             this.#connection.query(this.#queryString, values, (error, result) => {
                 if (error) {
                     return console.error("Error executing query.....");
@@ -361,7 +383,13 @@ class cafe {
                         <tbody>
                     `;
                 for (let i = 0; i < foodItemData.length; i++) {
-
+                    let color;
+                    const status = foodItemData[i].status.toUpperCase();
+                    if (status === 'AVAILABLE') {
+                        color = 'green'
+                    } else if (status === 'UNAVAILABLE') {
+                        color = 'red';
+                    }
                     manageFoodItemHtml +=
                         `
                             <tr>
@@ -370,7 +398,7 @@ class cafe {
                                 <td id="customer-manage-td-th">${foodItemData[i].quantity}</td>
                                 <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate}</td>
                                 <td id="customer-manage-td-th">${foodItemData[i].category}</td>
-                                <td id="customer-manage-td-th">${foodItemData[i].status}</td>
+                                <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                                 <td id="customer-manage-td-th">
                                     <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                         class="fas fa-pencil-alt"></i>

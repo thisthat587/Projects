@@ -13,7 +13,7 @@ function createWindow() {
             webSecurity: false,
         },
     });
-    // mainWindow.setMenuBarVisibility(false);
+    mainWindow.setMenuBarVisibility(false);
     mainWindow.loadFile("main.html");
 }
 
