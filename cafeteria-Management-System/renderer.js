@@ -437,4 +437,3 @@ class cafe {
 
 }
 
-const myCafe = new cafe();
