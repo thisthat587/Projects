@@ -127,9 +127,9 @@ class cafe {
                         <td id="customer-manage-td-th">${customerData[i].referring}</td>
                         <td id="customer-manage-td-th">${customerData[i].address}</td>
                         <td id="customer-manage-td-th">
-                        <i id="${i}" style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                        <i id="${i}" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                         class="fas fa-pencil-alt"></i>
-                        <i id="${i}" style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                        <i id="${i}" style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
                         class="fas fa-trash-alt"></i>
                         </td>
                         </tr>
@@ -244,9 +244,9 @@ class cafe {
                         <td id="customer-manage-td-th">${foodCategoryData[i].name}</td>
                         <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                         <td id="customer-manage-td-th">
-                        <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                        <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                 class="fas fa-pencil-alt"></i>
-                            <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                            <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
                             class="fas fa-trash-alt"></i>
                         </td>
                     </tr>
@@ -322,7 +322,7 @@ class cafe {
                             <option>Available</option>
                             <option>Unavailable</option>
                         </select>
-                        </td>
+                    </td>
                 </tr>
                 </table>
             <input id="add-food-submit" type="submit" value="Submit">
@@ -400,9 +400,9 @@ class cafe {
                                 <td id="customer-manage-td-th">${foodItemData[i].category}</td>
                                 <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                                 <td id="customer-manage-td-th">
-                                    <i style="background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                                    <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
                                         class="fas fa-pencil-alt"></i>
-                                    <i style="background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                                    <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
                                     class="fas fa-trash-alt"></i>
                                 </td>
                             </tr>
@@ -422,7 +422,13 @@ class cafe {
     }
 
     onClickOfAddInvoice() {
-
+        document.getElementById('add-customer-detail').style.display = 'none';
+        document.getElementById('add-food-item').style.display = 'none';
+        document.getElementById('add-food-category').style.display = 'none';
+        document.getElementById('manage-food-category').style.display = 'none';
+        document.getElementById('manage-customer-detail').style.display = 'none';
+        document.getElementById('manage-food-item').style.display = 'none';
+        document.getElementById('add-invoice').style.display = 'flex';
     }
 
     onClickOfManageInvoice() {

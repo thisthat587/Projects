@@ -1,188 +1,224 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="text"],
+input[type="number"], textarea {
+  width: 200%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+select {
+  width: 200%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
 /* Styling for the sidebar */
 .sidebar {
-    height: 100%;
-    width: 300px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    padding-top: 20px;
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .sidebar li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebar a {
-    text-decoration: none;
-    color: skyblue;
-    display: block;
-    padding: 20px;
+  text-decoration: none;
+  color: skyblue;
+  display: block;
+  padding: 20px;
 }
 
 /* Styling for the content */
 .content {
-    margin-left: 300px;
-    /* Adjust this to match the width of the sidebar */
-    padding: 20px;
+  margin-left: 300px;
+  /* Adjust this to match the width of the sidebar */
+  padding: 20px;
 }
-
 
 /* Style the dropdown container */
 
 .dropdown {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
 /* Style the dropdown content */
 .dropdown-content {
-    display: none;
-    background-color: #333;
-    min-width: 160px;
-    z-index: 1;
+  display: none;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
 }
 
 /* Style the dropdown links */
 .dropdown-content a {
-    color: skyblue;
-    padding: 10px;
-    text-decoration: none;
-    display: block;
-    border:1px;
+  color: skyblue;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  border: 1px;
 }
 
 /* Show the dropdown content on hover */
 .dropdown:hover .dropdown-content {
-    display: inline-block;
+  display: inline-block;
 }
 
 /* add-customer-detail div */
 
 #add-customer-detail {
-    font-size: large;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
+  font-size: medium;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
 }
 
+#add-invoice {
+  /* div */
+  font-size: medium;
+  display: flex;
+  /* display: none; */
+
+  background-color: rgb(240, 240, 240);
+}
+#add-new-invoice {
+  /* form */
+  background-color: rgb(255, 255, 255);
+  /* padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+  padding-bottom: 100px; */
+  border-radius: 15px;
+}
 #add-food-item {
-    font-size: large;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
+  font-size: medium;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
 }
 #add-food-category {
-    font-size: large;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
+  font-size: medium;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
 }
 
-#add-customer,#add-food,#add-category {
-    background-color: rgb(255, 255, 255);
-    padding-left: 200px;
-    padding-right: 200px;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    border-radius: 15px;
+#add-customer,
+#add-food,
+#add-category {
+  background-color: rgb(255, 255, 255);
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  border-radius: 15px;
 }
-
 
 #td-padding {
-    padding-right: 180px;
+  padding-right: 170px;
+  /* padding-left: 10px; */
 }
 
-input[type="text"],
-textarea {
-    width: 200%;
-    padding: 10px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-select {
-    width: 212%;
-    padding: 10px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-#add-customer-submit,#add-food-submit {
-    
-    background-color: rgb(56, 205, 255);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+#add-customer-submit,
+#add-food-submit {
+  background-color: rgb(56, 205, 255);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 /* add-customer-detail div */
 
 /* manage-customer-detail div */
 
 #manage-customer-detail {
-    font-family: Arial, sans-serif;
-    display: none;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
-  }
+  font-size: medium;
+  display: none;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
+}
 
-  #manage-customer {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+#manage-customer {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
 
-  #customer-manage-td-th {
-    text-align: center;
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
+#customer-manage-td-th {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
 
-  th {
-    background-color: #f2f2f2;
-  }
+#add-invoice-td-th {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
 
-  .add-client-btn {
-    padding: 10px;
-    background-color: green;
-    color: white;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-  }
+th {
+  background-color: #f2f2f2;
+}
 
-  #manage-food-category{
-    font-family: Arial, sans-serif;
-    display: none;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
-  }
+.add-client-btn {
+  padding: 10px;
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
 
-  #manage-food-item{
-    font-family: Arial, sans-serif;
-    display: none;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: rgb(240, 240, 240);
-  }
+#manage-food-category {
+  font-size: medium;
+  display: none;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
+}
+
+#manage-food-item {
+  font-size: medium;
+  display: none;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgb(240, 240, 240);
+}
