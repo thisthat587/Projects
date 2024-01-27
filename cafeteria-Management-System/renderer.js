@@ -32,7 +32,7 @@ class cafe {
                     <tr>
                         <td id="td-padding">Gender </td>
                         <td id="td-padding">
-                            <select id="cgen" name="category" required>
+                            <select style="margin-top: 5px" id="cgen" name="category" required>
                                 <option value="" disabled selected>--SELECT--</option>
                                 <option>MALE</option>
                                 <option>FEMALE</option>
@@ -168,7 +168,7 @@ class cafe {
                     <tr>
                         <td id="td-padding">Status </td>
                         <td id="td-padding">
-                            <select id="fcstatus" name="status" required>
+                            <select style="margin-top:5px;" id="fcstatus" name="status" required>
                                 <option>--SELECT--</option>
                                 <option>AVAILABLE</option>
                                 <option>UNAVAILABLE</option>
@@ -293,7 +293,7 @@ class cafe {
                 <tr>
                     <td id="td-padding">Category Name </td>
                     <td id="td-padding">
-                        <select id="fcategory" name="category" required>
+                        <select style="margin-top:5px;" id="fcategory" name="category" required>
                             <option>--SELECT--</option>
                         `;
 
@@ -317,7 +317,7 @@ class cafe {
                 <tr>
                 <td id="td-padding">Status  </td>
                     <td id="td-padding">
-                        <select id="fstatus" name="status" required>
+                        <select style="margin-top:18px; id="fstatus" name="status" required>
                             <option>--SELECT--</option>
                             <option>Available</option>
                             <option>Unavailable</option>
