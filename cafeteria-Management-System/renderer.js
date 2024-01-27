@@ -6,7 +6,7 @@ class cafe {
         host: 'localhost',
         user: 'root',
         password: 'root',
-        database: 'mydb'
+        database: 'cafe'
     });
 
     constructor() {
