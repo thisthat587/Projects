@@ -1,12 +1,12 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
 class cafe {
     #queryString;
     #connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: '1234',
-        database: 'cafe'
+        password: 'root',
+        database: 'mydb'
     });
 
     constructor() {
