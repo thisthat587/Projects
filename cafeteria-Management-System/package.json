@@ -1,5 +1,5 @@
 {
-  "name": "Cafeteria-management-application",
+  "name": "cafe-application",
   "version": "1.0.0",
   "description": "all the projects  and its files",
   "main": "main.js",
@@ -9,7 +9,6 @@
   "author": "piyush singh",
   "license": "ISC",
   "dependencies": {
-    "mysql": "^2.18.1",
     "mysql2": "^3.9.0"
   }
 }
