@@ -1,145 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invoice Management</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #e7e7e7;
-    margin: 0;
-    padding: 0;
-  }
-  .container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  .invoice-header, .invoice-body, .invoice-summary {
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  .invoice-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  input, select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  .btn {
-    padding: 10px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .btn-green {
-    background-color: #4CAF50;
-  }
-  .btn-red {
-    background-color: #F44336;
-  }
-  .fa-plus, .fa-trash {
-    margin: 0 5px;
-  }
-  label {
-    flex-basis: 20%;
-    align-self: center;
-  }
-  input[type="text"],
-  input[type="number"],
-  select {
-    flex-grow: 1;
-  }
-  .invoice-row:last-child {
-    margin-bottom: 0;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
+  <input type="number" id="numberInput" >
+  <button onclick="performCalculation()">Calculate</button>
+  <div id="result"></div>
 
-<div class="container">
-  <h2>Invoice Management</h2>
-  <div class="invoice-header">
-    <!-- Invoice Header Content -->
-    <!-- Add your header content here -->
-  </div>
-  
-  <div class="invoice-body">
-    <div class="invoice-row">
-      <select>
-        <option>Idli Sambhar</option>
-        <option>Masala dosa</option>
-        <!-- More items here -->
-      </select>
-      <input type="number" value="70">
-      <input type="number" value="1">
-      <input type="text" value="70.00" readonly>
-      <button class="btn btn-green"><i class="fa fa-plus"></i></button>
-      <button class="btn btn-red"><i class="fa fa-trash"></i></button>
-    </div>
-    <!-- Repeat for more items -->
-  </div>
-  <div class="invoice-summary">
-    <div class="invoice-row">
-      <label>Sub Amount</label>
-      <input type="text" value="430.00" readonly>
-      <label>Total Amount</label>
-      <input type="text" value="507.40" readonly>
-    </div>
-    <div class="invoice-row">
-      <label>Discount</label>
-      <input type="text">
-      <label>Grand Total</label>
-      <input type="text" value="507.40" readonly>
-    </div>
-    <div class="invoice-row">
-      <label>GST 18%</label>
-      <input type="text" value="77.40" readonly>
-      <label>Paid Amount</label>
-      <input type="text">
-    </div>
-    <div class="invoice-row">
-      <label>Due Amount</label>
-      <input type="text" value="507.40" readonly>
-      <label>Payment Type</label>
-      <select>
-        <option>---SELECT---</option>
-        <option value="cash">Cash</option>
-        <option value="card">Card</option>
-        <!-- Add other payment types here -->
-      </select>
-    </div>
-    <div class="invoice-row">
-      <label>Payment Status</label>
-      <select>
-        <option>---SELECT---</option>
-        <option value="paid">Paid</option>
-        <option value="unpaid">Unpaid</option>
-        <!-- Add other payment statuses here -->
-      </select>
-      <label>Payment Place</label>
-      <select>
-        <option>---SELECT---</option>
-        <option value="inStore">In-Store</option>
-        <option value="online">Online</option>
-        <!-- Add other payment places here -->
-      </select>
-    </div>
-  </div>
-</div>
+  <script>
+    function performCalculation() {
+      // Get the value from the input field
+      var inputValue = document.getElementById('numberInput').value;
 
+      // Convert the value to a floating-point number
+      var number = parseFloat(inputValue);
+
+      // Perform an arithmetic operation (e.g., add 10)
+      var result = number + 10.25;
+
+      // Display the result
+      document.getElementById('result').innerText = 'Result: ' + result;
+    }
+
+  </script>
 </body>
+
 </html>

@@ -476,6 +476,17 @@ class cafe {
     });
   }
 
+  updateContactHtml() {
+    const name = document.getElementById("customer-name").value;
+    this.#queryString = `SELECT mobile FROM customers WHERE name = ?;`;
+    this.#connection.query(this.#queryString, [name], (error, result) => {
+      if (error) {
+        return console.error("Error executing query.....");
+      }
+      document.getElementById("contact-no").value = result[0].mobile;
+    });
+  }
+
   onClickOfManageInvoice() {}
 }
 
