@@ -13,7 +13,8 @@ textarea {
 }
 
 input[type="text"],
-input[type="number"], textarea {
+input[type="number"],
+textarea {
   width: 200%;
   margin-top: 15px;
   margin-bottom: 10px;
@@ -24,6 +25,7 @@ select {
   margin-top: 15px;
   margin-bottom: 10px;
 }
+
 /* Styling for the sidebar */
 .sidebar {
   height: 100%;
@@ -102,14 +104,16 @@ select {
 
 #add-invoice {
   /* div */
-  font-size: medium;
-  display: flex;
-  /* display: none; */
 
+  /* display: flex; */
+  font-size: medium;
+  display: none;
   background-color: rgb(240, 240, 240);
 }
+
 #add-new-invoice {
   /* form */
+
   background-color: rgb(255, 255, 255);
   /* padding-left: 200px;
   padding-right: 200px;
@@ -117,6 +121,7 @@ select {
   padding-bottom: 100px; */
   border-radius: 15px;
 }
+
 #add-food-item {
   font-size: medium;
   display: none;
@@ -125,6 +130,7 @@ select {
   min-height: 100vh;
   background-color: rgb(240, 240, 240);
 }
+
 #add-food-category {
   font-size: medium;
   display: none;
@@ -158,6 +164,7 @@ select {
   border-radius: 5px;
   cursor: pointer;
 }
+
 /* add-customer-detail div */
 
 /* manage-customer-detail div */
