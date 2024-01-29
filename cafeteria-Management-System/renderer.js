@@ -490,9 +490,18 @@ class cafe {
   }
 
   updateFoodRateAndTotalHtml() {
-    const foodName = document.getElementById("food-name").value;
+    // const foodName = document.getElementById("food-name").value;
+    const foodNameSelect = document.querySelectorAll("#food-name");
+    const foodName = [];
+    foodNameSelect.forEach((item) => {
+      if (item.value !== "--SELECT--") {
+        foodName.push(item.value);
+      }
+    });
+    console.log(foodName);
+
     this.#queryString = `select rate from fooditemlist where name=?;`;
-    this.#connection.query(this.#queryString, [foodName], (error, result) => {
+    this.#connection.query(this.#queryString, [foodName[0]], (error, result) => {
       if (error) {
         return console.error("Error executing query.....");
       }
