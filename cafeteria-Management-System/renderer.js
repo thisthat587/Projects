@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+const { Query } = require("mysql2/typings/mysql/lib/protocol/sequences/Query");
 
 let i = 0;
 class cafe
@@ -431,25 +432,24 @@ class cafe
                                                 color = "red";
                                         }
                                         manageFoodItemHtml += `
-                            <tr>
-                                <td id="customer-manage-td-th">${i + 1}</td>
-                                <td id="customer-manage-td-th">${foodItemData[i].name
+                                                <tr>
+                                                        <td id="customer-manage-td-th">${i + 1}</td>
+                                                        <td id="customer-manage-td-th">${foodItemData[i].name
                                                 }</td>
-                                <td id="customer-manage-td-th">${foodItemData[i].quantity
+                                                        <td id="customer-manage-td-th">${foodItemData[i].quantity
                                                 }</td>
-                                <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate
+                                                        <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate
                                                 }</td>
-                                <td id="customer-manage-td-th">${foodItemData[i].category
+                                                        <td id="customer-manage-td-th">${foodItemData[i].category
                                                 }</td>
-                                <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
-                                <td id="customer-manage-td-th">
-                                    <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                                        class="fas fa-pencil-alt"></i>
-                                    <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                    class="fas fa-trash-alt"></i>
-                                </td>
-                            </tr>
-                        `;
+                                                        <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
+                                                        <td id="customer-manage-td-th">
+                                                        <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                                                                class="fas fa-pencil-alt"></i>
+                                                        <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                                                        class="fas fa-trash-alt"></i>
+                                                        </td>
+                                                </tr>`;
                                 }
                                 manageFoodItemHtml += `
                         </tbody>
@@ -474,8 +474,7 @@ class cafe
                 document.getElementById("manage-food-item").style.display = "none";
                 document.getElementById("add-invoice").style.display = "flex";
                 const query = [
-                        "select name from customers;",
-                        "select name from fooditemlist",
+                        "select name from customers;"
                 ];
                 this.#queryString = query[0];
                 this.#connection.query(this.#queryString, (error, result) =>
@@ -493,8 +492,26 @@ class cafe
                                 customerList.appendChild(option);
                         }
                 });
+                this.getFoodListNames();
+        }
 
-                this.#queryString = query[1];
+        updateContactHtml()
+        {
+                const name = document.getElementById("customer-name").value;
+                this.#queryString = `SELECT mobile FROM customers WHERE name = ?;`;
+                this.#connection.query(this.#queryString, [name], (error, result) =>
+                {
+                        if (error)
+                        {
+                                return console.error("Error executing query.....");
+                        }
+                        document.getElementById("contact-no").value = result[0].mobile;
+                });
+        }
+
+        getFoodListNames()
+        {
+                this.#queryString = "select name from fooditemlist";
                 this.#connection.query(this.#queryString, (error, result) =>
                 {
                         if (error)
@@ -515,76 +532,51 @@ class cafe
                 });
         }
 
-        updateContactHtml()
-        {
-                const name = document.getElementById("customer-name").value;
-                this.#queryString = `SELECT mobile FROM customers WHERE name = ?;`;
-                this.#connection.query(this.#queryString, [name], (error, result) =>
-                {
-                        if (error)
-                        {
-                                return console.error("Error executing query.....");
-                        }
-                        document.getElementById("contact-no").value = result[0].mobile;
-                });
-        }
 
         // i = 0;
         updateFoodRateAndTotalHtml()
         {
-                // const foodName = document.getElementById("food-name").value;
                 const foodNameSelect = document.querySelectorAll("#food-name");
-                const foodName = [];
-                // const foodRate = [];
-                foodNameSelect.forEach((item) =>
+                foodNameSelect.forEach((foodName) =>
                 {
-                        if (item.value !== "--SELECT--")
-                        {
-                                foodName.push(item.value);
-                        }
-                });
-                // foodName.forEach((item) =>
-                // {
-                const item = foodName[i];
-                this.#queryString = `select rate from fooditemlist where name=?;`;
-                this.#connection.query(this.#queryString, [item], (error, result) =>
-                {
-                        if (error)
-                        {
-                                return console.error("Error executing query.....");
-                        }
-                        const foodRate = document.querySelectorAll('#food-rate');
-                        foodRate[i].value = result[0].rate;
-                        const foodQuantity = document.querySelectorAll('#food-quantity')
-                        // foodQuantity.forEach((quantity) =>
-                        // {
-                        foodQuantity[i].addEventListener('input', () =>
-                        {
-                                console.log(i)
-                                const total = document.querySelectorAll('#total');
-                                total[i].value = parseFloat(foodQuantity[i].value) * parseFloat(result[0].rate);
-                                // parseFloat(foodRate[i].value);
-                                i++;
-                        })
-                        // })
-                        // foodRate.forEach((rate) =>
-                        // {
-                        //         rate.value = result[0].rate;
-                        // })
-                        // foodRate.push(parseFloat(result[0].rate))
-                });
-                // document.getElementById("food-rate").value = result[0].rate;
-                // const quantity = parseFloat(
-                //         document.getElementById("food-quantity").value
-                // );
-                // document.getElementById("total").value =
-                // quantity * parseFloat(result[0].rate);
-                // });
-                // console.log(foodRate);
-
+                        updateIt(foodName.value);
+                        console.log(foodName.value);
+                })
 
         }
 
+
+        updateIt(foodname){
+                this.#queryString=`select rate from `
+        }
+        addFoodItemRow()
+        {
+                const foodItemListTable = document.getElementById('food-item-list-table');
+                const foodItemRowHtml =
+                        `<tr>
+                                <td id="td-padding">
+                                <select style="width: 350%;" id="food-name" onchange=myCafe.updateFoodRateAndTotalHtml()>
+                                        <option>--SELECT--</option>
+                                </select>
+                                </td>
+                                <td id="td-padding"><input style="width: 350%;" type="text" name="" id="food-rate" readonly>
+                                </td>
+                                <td id="td-padding"><input type="number" name="" id="food-quantity">
+                                </td>
+                                <td id="td-padding"><input style="width: 350%;" type="number" name="" id="total" step="any"
+                                        readonly></td>
+                                <td>
+                                <i style="color: white;background-color:rgb(3, 105, 3);padding:8px;border-radius: 5px;"
+                                        class="fa fa-plus" onclick=myCafe.addFoodItemRow()></i>
+                                <i style="color: white;background-color:red;padding:8px ;border-radius: 5px; margin-left: 8px"
+                                        class="fa fa-trash"></i>
+                                </td>
+                        </tr>`;
+                const foodItemRow = document.createElement('tr');
+                foodItemRow.innerHTML = foodItemRowHtml;
+                foodItemListTable.appendChild(foodItemRow);
+                this.getFoodListNames();
+        }
         onClickOfManageInvoice() { }
 }
 

@@ -114,7 +114,7 @@
                     </tr>
                 </table>
                 <hr>
-                <table style="margin-left: 7%;">
+                <table id="food-item-list-table" style="margin-left: 7%;">
                     <tr>
                         <td id="td-padding">Food</td>
                         <td id="td-padding">Rate</td>
@@ -137,26 +137,7 @@
                                 readonly></td>
                         <td>
                             <i style="color: white;background-color:rgb(3, 105, 3);padding:8px;border-radius: 5px;"
-                                class="fa fa-plus"></i>
-                            <i style="color: white;background-color:red;padding:8px ;border-radius: 5px; margin-left: 8px"
-                                class="fa fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="td-padding">
-                            <select style="width: 350%;" id="food-name" onchange=myCafe.updateFoodRateAndTotalHtml()>
-                                <option>--SELECT--</option>
-                            </select>
-                        </td>
-                        <td id="td-padding"><input style="width: 350%;" type="text" name="" id="food-rate" readonly>
-                        </td>
-                        <td id="td-padding"><input type="number" name="" id="food-quantity">
-                        </td>
-                        <td id="td-padding"><input style="width: 350%;" type="text" name="" id="total" step="any"
-                                readonly></td>
-                        <td>
-                            <i style="color: white;background-color:rgb(3, 105, 3);padding:8px;border-radius: 5px;"
-                                class="fa fa-plus"></i>
+                                class="fa fa-plus" onclick=myCafe.addFoodItemRow()></i>
                             <i style="color: white;background-color:red;padding:8px ;border-radius: 5px; margin-left: 8px"
                                 class="fa fa-trash"></i>
                         </td>
