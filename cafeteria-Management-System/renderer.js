@@ -467,11 +467,13 @@ class cafe {
         return console.error("Error executing query.....");
       }
 
-      const foodItemSelectTag = document.getElementById("food-name");
+      const foodItemSelectTag = document.querySelectorAll("#food-name");
       for (let i = 0; i < result.length; i++) {
         const option = document.createElement("option");
         option.text = result[i].name;
-        foodItemSelectTag.appendChild(option);
+        foodItemSelectTag.forEach((selectTag) => {
+          selectTag.appendChild(option.cloneNode(true));
+        });
       }
     });
   }
@@ -484,6 +486,22 @@ class cafe {
         return console.error("Error executing query.....");
       }
       document.getElementById("contact-no").value = result[0].mobile;
+    });
+  }
+
+  updateFoodRateAndTotalHtml() {
+    const foodName = document.getElementById("food-name").value;
+    this.#queryString = `select rate from fooditemlist where name=?;`;
+    this.#connection.query(this.#queryString, [foodName], (error, result) => {
+      if (error) {
+        return console.error("Error executing query.....");
+      }
+      const rate = result[0].rate;
+      document.getElementById("food-rate").value = rate;
+      const quantity = parseFloat(
+        document.getElementById("food-quantity").value
+      );
+      document.getElementById("total").value = quantity * parseFloat(rate);
     });
   }
 
