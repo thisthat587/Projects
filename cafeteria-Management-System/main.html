@@ -131,8 +131,7 @@
                         </td>
                         <td id="td-padding"><input style="width: 350%;" type="text" name="" id="food-rate" readonly>
                         </td>
-                        <td id="td-padding"><input type="number" name="" id="food-quantity"
-                                oninput="myCafe.updateFoodRateAndTotalHtml()">
+                        <td id="td-padding"><input type="number" name="" id="food-quantity">
                         </td>
                         <td id="td-padding"><input style="width: 350%;" type="number" name="" id="total" step="any"
                                 readonly></td>
@@ -142,7 +141,8 @@
                             <i style="color: white;background-color:red;padding:8px ;border-radius: 5px; margin-left: 8px"
                                 class="fa fa-trash"></i>
                         </td>
-                    </tr> <tr>
+                    </tr>
+                    <tr>
                         <td id="td-padding">
                             <select style="width: 350%;" id="food-name" onchange=myCafe.updateFoodRateAndTotalHtml()>
                                 <option>--SELECT--</option>
@@ -150,10 +150,9 @@
                         </td>
                         <td id="td-padding"><input style="width: 350%;" type="text" name="" id="food-rate" readonly>
                         </td>
-                        <td id="td-padding"><input type="number" name="" id="food-quantity"
-                                oninput="myCafe.updateFoodRateAndTotalHtml()">
+                        <td id="td-padding"><input type="number" name="" id="food-quantity">
                         </td>
-                        <td id="td-padding"><input style="width: 350%;" type="number" name="" id="total" step="any"
+                        <td id="td-padding"><input style="width: 350%;" type="text" name="" id="total" step="any"
                                 readonly></td>
                         <td>
                             <i style="color: white;background-color:rgb(3, 105, 3);padding:8px;border-radius: 5px;"
@@ -257,7 +256,8 @@
 
     </div>
     <script>
-        document.getElementById('add-invoice').addEventListener('click', () => {
+        document.getElementById('add-invoice').addEventListener('click', () =>
+        {
             var today = new Date();
             var day = ('0' + today.getDate()).slice(-2);
             var month = ('0' + (today.getMonth() + 1)).slice(-2);

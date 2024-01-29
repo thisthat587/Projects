@@ -1,3 +1,5 @@
 {
-    "livePreview.defaultPreviewPath": "/cafeteria-Management-System/index.html"
+    "livePreview.defaultPreviewPath": "/cafeteria-Management-System/index.html",
+    "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+    "javascript.format.placeOpenBraceOnNewLineForFunctions": true
 }
