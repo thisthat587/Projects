@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
-const { Query } = require("mysql2/typings/mysql/lib/protocol/sequences/Query");
 
-let i = 0;
+// let i = 0;
 class cafe
 {
         #queryString;
@@ -536,19 +535,35 @@ class cafe
         // i = 0;
         updateFoodRateAndTotalHtml()
         {
+                let i = 0;
                 const foodNameSelect = document.querySelectorAll("#food-name");
                 foodNameSelect.forEach((foodName) =>
                 {
-                        updateIt(foodName.value);
-                        console.log(foodName.value);
+                        const foodRateInput = document.querySelectorAll('#food-rate');
+                        const foodQuantity = document.querySelectorAll('#food-quantity');
+                        const total = document.querySelectorAll('#total');
+                        this.#queryString = `select rate from fooditemlist where name=?`
+                        this.#connection.query(this.#queryString, [foodName.value], (error, result) =>
+                        {
+                                foodRateInput[i].value = result[0].rate;
+                                const quantity = foodQuantity[i].value;
+                                const totalValue = parseFloat(quantity) * parseFloat(result[0].rate);
+                                if (isNaN(totalValue))
+                                {
+                                        const totalIsZero = 0;
+                                        total[i].value = parseFloat(totalIsZero);
+                                }
+                                else
+                                {
+                                        total[i].value = parseFloat(totalValue);
+                                }
+                                i++;
+                        })
                 })
 
         }
 
 
-        updateIt(foodname){
-                this.#queryString=`select rate from `
-        }
         addFoodItemRow()
         {
                 const foodItemListTable = document.getElementById('food-item-list-table');
@@ -561,7 +576,7 @@ class cafe
                                 </td>
                                 <td id="td-padding"><input style="width: 350%;" type="text" name="" id="food-rate" readonly>
                                 </td>
-                                <td id="td-padding"><input type="number" name="" id="food-quantity">
+                                <td id="td-padding"><input type="number" name="" id="food-quantity" oninput=myCafe.updateFoodRateAndTotalHtml()>
                                 </td>
                                 <td id="td-padding"><input style="width: 350%;" type="number" name="" id="total" step="any"
                                         readonly></td>
@@ -577,6 +592,7 @@ class cafe
                 foodItemListTable.appendChild(foodItemRow);
                 this.getFoodListNames();
         }
+
         onClickOfManageInvoice() { }
 }
 
