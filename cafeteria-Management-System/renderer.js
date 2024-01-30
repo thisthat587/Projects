@@ -20,6 +20,7 @@ class cafe
                 document.getElementById("manage-customer-detail").style.display = "none";
                 document.getElementById("manage-food-item").style.display = "none";
                 document.getElementById("manage-food-category").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("add-customer-detail").style.display = "flex";
                 document.getElementById("add-customer-detail").innerHTML = `
             <form id="add-customer" action="#" method="post">
@@ -91,6 +92,7 @@ class cafe
                 document.getElementById("add-food-category").style.display = "none";
                 document.getElementById("manage-food-item").style.display = "none";
                 document.getElementById("manage-food-category").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "block";
 
                 this.#queryString = `select * from customers`;
@@ -168,6 +170,7 @@ class cafe
                 document.getElementById("manage-food-item").style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "none";
                 document.getElementById("manage-food-category").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("add-food-category").style.display = "flex";
                 document.getElementById("add-food-category").innerHTML = `
             <form id="add-category" action="#" method="post">
@@ -221,6 +224,7 @@ class cafe
                 document.getElementById("manage-customer-detail").style.display = "none";
                 document.getElementById("manage-food-item").style.display = "none";
                 document.getElementById("add-customer-detail").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("manage-food-category").style.display = "block";
                 this.#queryString = "select * from foodcategorylist";
 
@@ -296,6 +300,7 @@ class cafe
                 document.getElementById("manage-customer-detail").style.display = "none";
                 document.getElementById("manage-food-category").style.display = "none";
                 document.getElementById("manage-food-item").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("add-food-item").style.display = "flex";
                 const query = [
                         `select name from foodcategorylist`,
@@ -391,6 +396,7 @@ class cafe
                 document.getElementById("add-food-category").style.display = "none";
                 document.getElementById("manage-food-category").style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "none";
+                document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("manage-food-item").style.display = "block";
                 this.#queryString = "select * from fooditemlist";
                 try
@@ -550,19 +556,25 @@ class cafe
                                 const totalValue = parseFloat(quantity) * parseFloat(result[0].rate);
                                 if (isNaN(totalValue))
                                 {
-                                        const totalIsZero = 0;
-                                        total[i].value = parseFloat(totalIsZero);
+                                        totalValue = 0;
                                 }
-                                else
-                                {
-                                        total[i].value = parseFloat(totalValue);
-                                }
+                                total[i].value = parseFloat(totalValue);
+                                this.updateTotalAmount();
                                 i++;
                         })
                 })
 
         }
 
+        updateTotalAmount(totalValue)
+        {
+                let totalAmount = 0;
+                const totalAmountInputTag = document.querySelectorAll('#total-amount');
+                totalAmountInputTag.forEach((amount) =>
+                {
+                        totalAmount += parseFloat(amount.value);
+                });
+        }
 
         addFoodItemRow()
         {
