@@ -553,27 +553,30 @@ class cafe
                         {
                                 foodRateInput[i].value = result[0].rate;
                                 const quantity = foodQuantity[i].value;
-                                const totalValue = parseFloat(quantity) * parseFloat(result[0].rate);
+                                let totalValue = parseFloat(quantity) * parseFloat(result[0].rate);
                                 if (isNaN(totalValue))
                                 {
                                         totalValue = 0;
                                 }
                                 total[i].value = parseFloat(totalValue);
-                                this.updateTotalAmount();
+                                this.updateTotalAmountAndRemaining();
                                 i++;
                         })
                 })
 
         }
 
-        updateTotalAmount(totalValue)
+        updateTotalAmountAndRemaining()
         {
                 let totalAmount = 0;
-                const totalAmountInputTag = document.querySelectorAll('#total-amount');
-                totalAmountInputTag.forEach((amount) =>
+                const totalInputTag = document.querySelectorAll('#total');
+                totalInputTag.forEach((amount) =>
                 {
                         totalAmount += parseFloat(amount.value);
                 });
+                document.getElementById('total-amount').value = totalAmount;
+                document.getElementById('gst').value = (18 * totalAmount) / 100;
+                document.getElementById('net-amount').value = totalAmount + parseFloat(document.getElementById('gst').value)
         }
 
         addFoodItemRow()

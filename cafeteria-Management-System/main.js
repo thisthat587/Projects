@@ -1,4 +1,5 @@
 const { app, BrowserWindow, screen } = require("electron");
+const say = require("say");
 
 function createWindow() {
   // Get the size of the primary display
