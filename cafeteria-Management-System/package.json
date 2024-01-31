@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "mysql2": "^3.9.0",
+    "path": "^0.12.7",
     "say": "^0.16.0"
   }
 }
