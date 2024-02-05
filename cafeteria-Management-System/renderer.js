@@ -1,8 +1,7 @@
 const mysql = require("mysql2");
 
 // let i = 0;
-class cafe
-{
+class cafe {
         #queryString;
         #connection = mysql.createConnection({
                 host: "localhost",
@@ -13,8 +12,7 @@ class cafe
 
         constructor() { }
 
-        onClickOfAddCustomerDetail()
-        {
+        onClickOfAddCustomerDetail(htmlText) {
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "none";
@@ -22,71 +20,84 @@ class cafe
                 document.getElementById("manage-food-category").style.display = "none";
                 document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("add-customer-detail").style.display = "flex";
-                document.getElementById("add-customer-detail").innerHTML = `
-            <form id="add-customer" action="#" method="post">
-                <h2><u>Add New Customer</u></h2>
-                <table>
-                    <tr>
+                if (htmlText === 'fromSidebar') {
+                        document.getElementById("add-customer-detail").innerHTML = `
+                        <form id="add-customer" action="#" method="post">
+                        <h2><u>Add New Customer</u></h2>
+                        <table>
+                        <tr>
                         <td id="td-padding">Name </td>
                         <td id="td-padding"><input id="cname" type="text" name="name" required></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td id="td-padding">Gender </td>
                         <td id="td-padding">
-                            <select style="margin-top: 5px" id="cgen" name="category" required>
-                                <option value="" disabled selected>--SELECT--</option>
-                                <option>MALE</option>
-                                <option>FEMALE</option>
-                                <option>OTHER</option>
-                            </select>
+                        <select style="margin-top: 5px" id="cgen" name="category" required>
+                        <option value="" disabled selected>--SELECT--</option>
+                        <option>MALE</option>
+                        <option>FEMALE</option>
+                        <option>OTHER</option>
+                        </select>
                         </td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td id="td-padding">Mobile </td>
                         <td id="td-padding"><input id="cmobile" type="text" name="mobile" required></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td id="td-padding">Referred By </td>
                         <td id="td-padding"><input id="crefer" type="text" name="referring" required></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td id="td-padding">Address </td>
                         <td id="td-padding"><textarea id="caddress" name="address" rows="4" required></textarea></td>
-                    </tr>
-                    </table>
-                    <input id="add-customer-submit" type="submit" value="Submit">
-                    </form>
-                    `;
-                // <button id="add-customer-submit">Submit</button>
+                        </tr>
+                        </table>
+                        <input id="add-customer-submit" type="submit" value="Submit">
+                        </form>
+                        `;
+                        // <button id="add-customer-submit">Submit</button>
 
-                document
-                        .getElementById("add-customer-submit")
-                        .addEventListener("click", (event) =>
-                        {
-                                event.preventDefault();
-                                const cName = document.getElementById("cname").value;
-                                const cGen = document.getElementById("cgen").value;
-                                const cMobile = document.getElementById("cmobile").value;
-                                const cRefer = document.getElementById("crefer").value;
-                                const cAddress = document.getElementById("caddress").value;
+                        document
+                                .getElementById("add-customer-submit")
+                                .addEventListener("click", (event) => {
+                                        event.preventDefault();
+                                        const cName = document.getElementById("cname").value;
+                                        const cGen = document.getElementById("cgen").value;
+                                        const cMobile = document.getElementById("cmobile").value;
+                                        const cRefer = document.getElementById("crefer").value;
+                                        const cAddress = document.getElementById("caddress").value;
 
-                                this.#queryString = `INSERT INTO customers (name, gen, mobile, referring, address) VALUES (?, ?, ?, ?, ?)`;
-                                const values = [cName, cGen, cMobile, cRefer, cAddress];
+                                        this.#queryString = `INSERT INTO customers (name, gen, mobile, referring, address) VALUES (?, ?, ?, ?, ?)`;
+                                        const values = [cName, cGen, cMobile, cRefer, cAddress];
 
-                                this.#connection.query(this.#queryString, values, (error, result) =>
-                                {
-                                        if (error)
-                                        {
-                                                return console.error("Error executing query: " + error.message);
-                                        }
-                                        // Query executed successfully
-                                        console.log("Query result:", result);
+                                        this.#connection.query(this.#queryString, values);
+                                        alert("New Record Added");
+                                        this.onClickOfManageCustomerDetail();
                                 });
-                        });
+                } else {
+                        document.getElementById("add-customer-detail").innerHTML = htmlText;
+                        document
+                                .getElementById("add-customer-submit")
+                                .addEventListener("click", (event) => {
+                                        event.preventDefault();
+                                        const cName = document.getElementById("cname").value;
+                                        const cGen = document.getElementById("cgen").value;
+                                        const cMobile = document.getElementById("cmobile").value;
+                                        const cRefer = document.getElementById("crefer").value;
+                                        const cAddress = document.getElementById("caddress").value;
+                                        this.#queryString = `UPDATE customers SET name = ?, gen = ?, mobile = ?, referring = ?, address = ? WHERE name = '${cName}'`;
+
+                                        const values = [cName, cGen, cMobile, cRefer, cAddress];
+
+                                        this.#connection.query(this.#queryString, values);
+                                        alert("Details Updated");
+                                        this.onClickOfManageCustomerDetail();
+                                });
+                }
         }
 
-        onClickOfManageCustomerDetail()
-        {
+        onClickOfManageCustomerDetail() {
                 document.getElementById("add-customer-detail").style.display = "none";
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
@@ -96,19 +107,16 @@ class cafe
                 document.getElementById("manage-customer-detail").style.display = "block";
 
                 this.#queryString = `select * from customers`;
-                try
-                {
-                        this.#connection.query(this.#queryString, (error, result) =>
-                        {
-                                if (error)
-                                {
+                try {
+                        this.#connection.query(this.#queryString, (error, result) => {
+                                if (error) {
                                         console.error("Error executing query.....");
                                         return;
                                 }
-                                const customerData = result;
+                                var customerData = result;
                                 let manageCustomerDetailHtml = `
                         <h2><u>View Customers</u></h2>
-                        <button class="add-client-btn" onclick=myCafe.onClickOfAddCustomerDetail()>Add New Customer</button>
+                        <button class="add-client-btn" onclick="myCafe.onClickOfAddCustomerDetail('fromSidebar')">Add New Customer</button>
                         <table id="manage-customer">
                         <thead>
                         <tr>
@@ -124,8 +132,7 @@ class cafe
                         <tbody>
 
                     `;
-                                for (let i = 0; i < customerData.length; i++)
-                                {
+                                for (let i = 0; i < customerData.length; i++) {
                                         manageCustomerDetailHtml += `
                         <tr>
                         <td id="customer-manage-td-th">${i + 1}</td>
@@ -140,10 +147,10 @@ class cafe
                         <td id="customer-manage-td-th">${customerData[i].address
                                                 }</td>
                         <td id="customer-manage-td-th">
-                        <i id="${i}" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                        class="fas fa-pencil-alt"></i>
-                        <i id="${i}" style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                        class="fas fa-trash-alt"></i>
+                        <i  style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; margin-left: 8px"
+                        class="fas fa-pencil-alt" onclick="myCafe.editCustomerDetail('${customerData[i].name}','${customerData[i].gen}','${customerData[i].mobile}','${customerData[i].referring}','${customerData[i].address}')"></i>
+                        <i  style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
+                        class="fas fa-trash-alt" onclick="myCafe.deleteCustomerDetail('${customerData[i].name}')"></i>
                         </td>
                         </tr>
                     `;
@@ -156,15 +163,64 @@ class cafe
                                         manageCustomerDetailHtml;
                                 // this.#connection.end();
                         });
-                } catch (error)
-                {
+                } catch (error) {
                         console.error("Error eXecuting query.....");
                         return;
                 }
         }
 
-        onClickOfAddFoodCategory()
-        {
+        editCustomerDetail(name, gen, mobile, referring, address) {
+                const htmlTextToSend = `<form id="add-customer" action="#" method="post">
+                <h2><u>Edit</u></h2>
+                <table>
+                <tr>
+                <td id="td-padding">Name </td>
+                <td id="td-padding"><input id="cname" type="text" name="name" value="${name}" required></td>
+                </tr>
+                <tr>
+                <td id="td-padding">Gender </td>
+                <td id="td-padding">
+                <select style="margin-top: 5px" id="cgen" name="category" required>
+                <option selected>${gen}</option>
+                <option>MALE</option>
+                <option>FEMALE</option>
+                <option>OTHER</option>
+                </select>
+                </td>
+                </tr>
+                <tr>
+                <td id="td-padding">Mobile </td>
+                <td id="td-padding"><input id="cmobile" type="text" name="mobile" value="${mobile}" required></td>
+                </tr>
+                <tr>
+                <td id="td-padding">Referred By </td>
+                <td id="td-padding"><input id="crefer" type="text" name="referring" value="${referring}" required></td>
+                </tr>
+                <tr>
+                <td id="td-padding">Address </td>
+                <td id="td-padding"><textarea id="caddress" name="address" required>${address}</textarea></td>
+                </tr>
+                </table>
+                <input id="add-customer-submit" type="submit" value="Submit">
+                </form>`;
+                this.onClickOfAddCustomerDetail(htmlTextToSend);
+                // this.#queryString=`update in customers set`
+        }
+
+        deleteCustomerDetail(name) {
+                const isConfirmed = confirm("Are You sure you Want to delete this record ?");
+                if (isConfirmed) {
+                        this.#queryString = `delete from customers where name='${name}'`
+                        this.#connection.query(this.#queryString)
+                        alert("Record Deleted");
+                        this.onClickOfManageCustomerDetail();
+                } else {
+                        alert("Cancled");
+                        this.onClickOfManageCustomerDetail();
+                }
+        }
+
+        onClickOfAddFoodCategory(htmlText) {
                 document.getElementById("add-customer-detail").style.display = "none";
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("manage-food-item").style.display = "none";
@@ -172,53 +228,56 @@ class cafe
                 document.getElementById("manage-food-category").style.display = "none";
                 document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("add-food-category").style.display = "flex";
-                document.getElementById("add-food-category").innerHTML = `
-            <form id="add-category" action="#" method="post">
-                <h2><u>Add Food Category </u></h2>
-                <table>
-                    <tr>
+                if (htmlText === 'fromSidebar') {
+
+                        document.getElementById("add-food-category").innerHTML = `
+                        <form id="add-category" action="#" method="post">
+                        <h2><u>Add Food Category </u></h2>
+                        <table>
+                        <tr>
                         <td id="td-padding">Category Name </td>
                         <td id="td-padding"><input id="fcname" type="text" name="name" required></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td id="td-padding">Status </td>
                         <td id="td-padding">
-                            <select style="margin-top:5px;" id="fcstatus" name="status" required>
-                                <option>--SELECT--</option>
-                                <option>AVAILABLE</option>
-                                <option>UNAVAILABLE</option>
-                            </select>
+                        <select style="margin-top:5px;" id="fcstatus" name="status" required>
+                        <option>--SELECT--</option>
+                        <option>AVAILABLE</option>
+                        <option>UNAVAILABLE</option>
+                        </select>
                         </td>
-                    </tr>
-                </table>
-                <input id="add-food-submit" type="submit" value="Submit">
-            </form>
-            `;
-                document
-                        .getElementById("add-food-submit")
-                        .addEventListener("click", (event) =>
-                        {
-                                event.preventDefault();
+                        </tr>
+                        </table>
+                        <input id="add-food-submit" type="submit" value="Submit">
+                        </form>
+                        `;
+                        document
+                                .getElementById("add-food-submit")
+                                .addEventListener("click", (event) => {
+                                        event.preventDefault();
 
-                                const fcName = document.getElementById("fcname").value;
-                                const fcStatus = document.getElementById("fcstatus").value;
-                                const values = [fcName, fcStatus];
-                                document.getElementById("add-category").reset();
-                                this.#queryString = `insert into foodcategorylist(name,status) values (?,?)`;
+                                        const fcName = document.getElementById("fcname").value;
+                                        const fcStatus = document.getElementById("fcstatus").value;
+                                        const values = [fcName, fcStatus];
+                                        document.getElementById("add-category").reset();
+                                        this.#queryString = `insert into foodcategorylist(name,status) values (?,?)`;
 
-                                this.#connection.query(this.#queryString, values, (error, result) =>
-                                {
-                                        if (error)
-                                        {
-                                                return console.error("Error executing query.....");
-                                        }
-                                        console.log(result);
+                                        this.#connection.query(this.#queryString, values, (error, result) => {
+                                                if (error) {
+                                                        return console.error("Error executing query.....");
+                                                }
+                                                console.log(result);
+                                        });
                                 });
-                        });
+                } else {
+                        document.getElementById("add-food-category").innerHTML = htmlText
+
+                }
         }
 
-        onClickOfmanageFoodCategory()
-        {
+
+        onClickOfmanageFoodCategory() {
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "none";
@@ -228,12 +287,9 @@ class cafe
                 document.getElementById("manage-food-category").style.display = "block";
                 this.#queryString = "select * from foodcategorylist";
 
-                try
-                {
-                        this.#connection.query(this.#queryString, (error, result) =>
-                        {
-                                if (error)
-                                {
+                try {
+                        this.#connection.query(this.#queryString, (error, result) => {
+                                if (error) {
                                         console.error("Error executing query.....");
                                 }
 
@@ -252,29 +308,25 @@ class cafe
                     </thead>
                     <tbody>
                     `;
-                                for (let i = 0; i < foodCategoryData.length; i++)
-                                {
+                                for (let i = 0; i < foodCategoryData.length; i++) {
                                         let color;
                                         const status = foodCategoryData[i].status.toUpperCase();
-                                        if (status === "AVAILABLE")
-                                        {
+                                        if (status === "AVAILABLE") {
                                                 color = "green";
-                                        } else if (status === "UNAVAILABLE")
-                                        {
+                                        } else if (status === "UNAVAILABLE") {
                                                 color = "red";
                                         }
 
                                         manageFoodCategoryHtml += `
                         <tr>
                         <td id="customer-manage-td-th">${i + 1}</td>
-                        <td id="customer-manage-td-th">${foodCategoryData[i].name
-                                                }</td>
+                        <td id="customer-manage-td-th">${foodCategoryData[i].name}</td>
                         <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                         <td id="customer-manage-td-th">
                         <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                                class="fas fa-pencil-alt"></i>
+                                class="fas fa-pencil-alt" onclick="myCafe.editFoodCategoryDetail('${foodCategoryData[i].name}','${foodCategoryData[i].status}')"></i>
                             <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                            class="fas fa-trash-alt"></i>
+                            class="fas fa-trash-alt" onclick="myCafe.deleteFoodCategoryDetail('${foodCategoryData[i].name}')"></i>
                         </td>
                     </tr>
                     `;
@@ -287,14 +339,40 @@ class cafe
                                         manageFoodCategoryHtml;
                                 // this.#connection.end();
                         });
-                } catch (error)
-                {
+                } catch (error) {
                         console.error("Some error occured.....");
                 }
         }
+        editFoodCategoryDetail(name, status) {
+                console.log(name, status);
+                htmlTextToSend = `<form id="add-category" action="#" method="post">
+                <h2><u>Add Food Category </u></h2>
+                <table>
+                    <tr>
+                        <td id="td-padding">Category Name </td>
+                        <td id="td-padding"><input id="fcname" type="text" name="name" value="${name}" required></td>
+                    </tr>
+                    <tr>
+                        <td id="td-padding">Status </td>
+                        <td id="td-padding">
+                            <select style="margin-top:5px;" id="fcstatus" name="status" required>
+                                <option selected>${status}</option>
+                                <option>AVAILABLE</option>
+                                <option>UNAVAILABLE</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input id="add-food-submit" type="submit" value="Submit">
+            </form>`;
+                this.onClickOfAddFoodCategory(htmlTextToSend);
+        }
 
-        onClickOfAddFoodItem()
-        {
+        deleteFoodCategoryDetail(name) {
+                console.log(name);
+        }
+
+        onClickOfAddFoodItem() {
                 document.getElementById("add-customer-detail").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
                 document.getElementById("manage-customer-detail").style.display = "none";
@@ -330,15 +408,12 @@ class cafe
                         `;
 
                 this.#queryString = query[0];
-                this.#connection.query(this.#queryString, (error, result) =>
-                {
+                this.#connection.query(this.#queryString, (error, result) => {
                         const foorCategorySelectTag = document.getElementById("fcategory");
-                        if (error)
-                        {
+                        if (error) {
                                 console.error("Error executing query.....");
                         }
-                        for (let i = 0; i < result.length; i++)
-                        {
+                        for (let i = 0; i < result.length; i++) {
                                 const option = document.createElement("option");
                                 option.text = result[i].name;
                                 foorCategorySelectTag.appendChild(option);
@@ -367,8 +442,7 @@ class cafe
 
                 document
                         .getElementById("add-food-submit")
-                        .addEventListener("click", (event) =>
-                        {
+                        .addEventListener("click", (event) => {
                                 event.preventDefault();
                                 const fName = document.getElementById("fname").value;
                                 const fRate = document.getElementById("frate").value;
@@ -378,10 +452,8 @@ class cafe
                                 const values = [fName, fRate, fCategory, fStatus, fQuan];
                                 document.getElementById("add-food").reset();
                                 this.#queryString = query[1];
-                                this.#connection.query(this.#queryString, values, (error, result) =>
-                                {
-                                        if (error)
-                                        {
+                                this.#connection.query(this.#queryString, values, (error, result) => {
+                                        if (error) {
                                                 return console.error("Error executing query.....");
                                         }
                                         console.log(result);
@@ -389,8 +461,7 @@ class cafe
                         });
         }
 
-        onClickOfManageFoodItem()
-        {
+        onClickOfManageFoodItem() {
                 document.getElementById("add-customer-detail").style.display = "none";
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
@@ -399,12 +470,9 @@ class cafe
                 document.getElementById('add-invoice').style.display = "none";
                 document.getElementById("manage-food-item").style.display = "block";
                 this.#queryString = "select * from fooditemlist";
-                try
-                {
-                        this.#connection.query(this.#queryString, (error, result) =>
-                        {
-                                if (error)
-                                {
+                try {
+                        this.#connection.query(this.#queryString, (error, result) => {
+                                if (error) {
                                         console.error("Error executing query.....");
                                 }
                                 const foodItemData = result;
@@ -425,15 +493,12 @@ class cafe
                         </thead>
                         <tbody>
                     `;
-                                for (let i = 0; i < foodItemData.length; i++)
-                                {
+                                for (let i = 0; i < foodItemData.length; i++) {
                                         let color;
                                         const status = foodItemData[i].status.toUpperCase();
-                                        if (status === "AVAILABLE")
-                                        {
+                                        if (status === "AVAILABLE") {
                                                 color = "green";
-                                        } else if (status === "UNAVAILABLE")
-                                        {
+                                        } else if (status === "UNAVAILABLE") {
                                                 color = "red";
                                         }
                                         manageFoodItemHtml += `
@@ -463,14 +528,12 @@ class cafe
                                 document.getElementById("manage-food-item").innerHTML =
                                         manageFoodItemHtml;
                         });
-                } catch (error)
-                {
+                } catch (error) {
                         console.log("Some error Occured.....");
                 }
         }
 
-        onClickOfAddInvoice()
-        {
+        onClickOfAddInvoice() {
                 document.getElementById("add-customer-detail").style.display = "none";
                 document.getElementById("add-food-item").style.display = "none";
                 document.getElementById("add-food-category").style.display = "none";
@@ -482,16 +545,13 @@ class cafe
                         "select name from customers;"
                 ];
                 this.#queryString = query[0];
-                this.#connection.query(this.#queryString, (error, result) =>
-                {
-                        if (error)
-                        {
+                this.#connection.query(this.#queryString, (error, result) => {
+                        if (error) {
                                 return console.error("Error executing query.....");
                         }
                         const customerList = document.getElementById("customer-name");
 
-                        for (let i = 0; i < result.length; i++)
-                        {
+                        for (let i = 0; i < result.length; i++) {
                                 const option = document.createElement("option");
                                 option.text = result[i].name;
                                 customerList.appendChild(option);
@@ -500,37 +560,29 @@ class cafe
                 this.getFoodListNames();
         }
 
-        updateContactHtml()
-        {
+        updateContactHtml() {
                 const name = document.getElementById("customer-name").value;
                 this.#queryString = `SELECT mobile FROM customers WHERE name = ?;`;
-                this.#connection.query(this.#queryString, [name], (error, result) =>
-                {
-                        if (error)
-                        {
+                this.#connection.query(this.#queryString, [name], (error, result) => {
+                        if (error) {
                                 return console.error("Error executing query.....");
                         }
                         document.getElementById("contact-no").value = result[0].mobile;
                 });
         }
 
-        getFoodListNames()
-        {
+        getFoodListNames() {
                 this.#queryString = "select name from fooditemlist";
-                this.#connection.query(this.#queryString, (error, result) =>
-                {
-                        if (error)
-                        {
+                this.#connection.query(this.#queryString, (error, result) => {
+                        if (error) {
                                 return console.error("Error executing query.....");
                         }
 
                         const foodItemSelectTag = document.querySelectorAll("#food-name");
-                        for (let i = 0; i < result.length; i++)
-                        {
+                        for (let i = 0; i < result.length; i++) {
                                 const option = document.createElement("option");
                                 option.text = result[i].name;
-                                foodItemSelectTag.forEach((selectTag) =>
-                                {
+                                foodItemSelectTag.forEach((selectTag) => {
                                         selectTag.appendChild(option.cloneNode(true));
                                 });
                         }
@@ -539,23 +591,19 @@ class cafe
 
 
         // i = 0;
-        updateFoodRateAndTotalHtml()
-        {
+        updateFoodRateAndTotalHtml() {
                 let i = 0;
                 const foodNameSelect = document.querySelectorAll("#food-name");
-                foodNameSelect.forEach((foodName) =>
-                {
+                foodNameSelect.forEach((foodName) => {
                         const foodRateInput = document.querySelectorAll('#food-rate');
                         const foodQuantity = document.querySelectorAll('#food-quantity');
                         const total = document.querySelectorAll('#total');
                         this.#queryString = `select rate from fooditemlist where name=?`
-                        this.#connection.query(this.#queryString, [foodName.value], (error, result) =>
-                        {
+                        this.#connection.query(this.#queryString, [foodName.value], (error, result) => {
                                 foodRateInput[i].value = result[0].rate;
                                 const quantity = foodQuantity[i].value;
                                 let totalValue = parseFloat(quantity) * parseFloat(result[0].rate);
-                                if (isNaN(totalValue))
-                                {
+                                if (isNaN(totalValue)) {
                                         totalValue = 0;
                                 }
                                 total[i].value = parseFloat(totalValue);
@@ -566,12 +614,10 @@ class cafe
 
         }
 
-        updateTotalAmountAndRemaining()
-        {
+        updateTotalAmountAndRemaining() {
                 let totalAmount = 0;
                 const totalInputTag = document.querySelectorAll('#total');
-                totalInputTag.forEach((amount) =>
-                {
+                totalInputTag.forEach((amount) => {
                         totalAmount += parseFloat(amount.value);
                 });
                 document.getElementById('total-amount').value = totalAmount;
@@ -579,8 +625,7 @@ class cafe
                 document.getElementById('net-amount').value = totalAmount + parseFloat(document.getElementById('gst').value)
         }
 
-        addFoodItemRow()
-        {
+        addFoodItemRow() {
                 const foodItemListTable = document.getElementById('food-item-list-table');
                 const foodItemRowHtml =
                         `<tr>

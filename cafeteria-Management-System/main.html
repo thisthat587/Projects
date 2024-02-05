@@ -14,14 +14,14 @@
 
 <body>
     <div class="sidebar">
-        <h2 style="color: aliceblue;" align="center"> Cafe And Retreat</h2>
+        <h2 style="color: aliceblue;" align="center">Cafe And Retreat</h2>
         <ul>
             <li class="dropdown"><a href="#" onclick=myCafe.showDashboard()>DASHBOARD</a></li>
 
             <li class="dropdown">
                 <a href="#">CUSTOMER</a>
                 <div class="dropdown-content">
-                    <a href="#" onclick=myCafe.onClickOfAddCustomerDetail()>ADD CUSTOMER</a>
+                    <a href="#" onclick="myCafe.onClickOfAddCustomerDetail('fromSidebar')">ADD CUSTOMER</a>
                     <a href="#" onclick=myCafe.onClickOfManageCustomerDetail()>MANAGE CUSTOMER</a>
                 </div>
             </li>
@@ -29,7 +29,7 @@
             <li class="dropdown">
                 <a href="#">FOOD CATEGORY</a>
                 <div class="dropdown-content">
-                    <a href="#" onclick=myCafe.onClickOfAddFoodCategory()>ADD CATEGORY</a>
+                    <a href="#" onclick="myCafe.onClickOfAddFoodCategory('fromSidebar')">ADD CATEGORY</a>
                     <a href="#" onclick=myCafe.onClickOfmanageFoodCategory()>MANAGE CATEGORY</a>
                 </div>
             </li>
@@ -238,8 +238,7 @@
 
     </div>
     <script>
-        document.getElementById('add-invoice').addEventListener('click', () =>
-        {
+        document.getElementById('add-invoice').addEventListener('click', () => {
             var today = new Date();
             var day = ('0' + today.getDate()).slice(-2);
             var month = ('0' + (today.getMonth() + 1)).slice(-2);
