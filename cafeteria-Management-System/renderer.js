@@ -77,16 +77,17 @@ class cafe {
                                 });
                 } else {
                         document.getElementById("add-customer-detail").innerHTML = htmlText;
+                        let cName = document.getElementById("cname").value;
+                        this.#queryString = `UPDATE customers SET name = ?, gen = ?, mobile = ?, referring = ?, address = ? WHERE name = '${cName}'`;
                         document
                                 .getElementById("add-customer-submit")
                                 .addEventListener("click", (event) => {
                                         event.preventDefault();
-                                        const cName = document.getElementById("cname").value;
+                                        cName = document.getElementById("cname").value;
                                         const cGen = document.getElementById("cgen").value;
                                         const cMobile = document.getElementById("cmobile").value;
                                         const cRefer = document.getElementById("crefer").value;
                                         const cAddress = document.getElementById("caddress").value;
-                                        this.#queryString = `UPDATE customers SET name = ?, gen = ?, mobile = ?, referring = ?, address = ? WHERE name = '${cName}'`;
 
                                         const values = [cName, cGen, cMobile, cRefer, cAddress];
 
@@ -267,15 +268,33 @@ class cafe {
                                                 if (error) {
                                                         return console.error("Error executing query.....");
                                                 }
-                                                console.log(result);
                                         });
+                                        alert("One Food Category Added")
+                                        this.onClickOfmanageFoodCategory();
                                 });
                 } else {
                         document.getElementById("add-food-category").innerHTML = htmlText
-
+                        let fcName = document.getElementById("fcname").value;
+                        this.#queryString = `update foodcategorylist set name=? , status=? where name='${fcName}'`;
+                        document
+                                .getElementById("add-food-submit")
+                                .addEventListener("click", (event) => {
+                                        event.preventDefault();
+                                        fcName = document.getElementById("fcname").value;
+                                        const fcStatus = document.getElementById("fcstatus").value;
+                                        const values = [fcName, fcStatus];
+                                        document.getElementById("add-category").reset();
+                                        // this.#queryString = `insert into foodcategorylist(name,status) values (?,?)`;
+                                        this.#connection.query(this.#queryString, values, (error, result) => {
+                                                if (error) {
+                                                        return console.error("Error executing query.....", error);
+                                                }
+                                        });
+                                        alert("Details Updated");
+                                        this.onClickOfmanageFoodCategory();
+                                });
                 }
         }
-
 
         onClickOfmanageFoodCategory() {
                 document.getElementById("add-food-item").style.display = "none";
@@ -296,7 +315,7 @@ class cafe {
                                 const foodCategoryData = result;
                                 let manageFoodCategoryHtml = `
                     <h2><u>View Food Categories</u></h2>
-                    <button class="add-client-btn" onClick=myCafe.onClickOfAddFoodCategory()>Add New Category</button>
+                    <button class="add-client-btn" onClick="myCafe.onClickOfAddFoodCategory('fromSidebar')">Add New Category</button>
                     <table id="manage-customer">
                     <thead>
                     <tr>
@@ -343,9 +362,9 @@ class cafe {
                         console.error("Some error occured.....");
                 }
         }
+
         editFoodCategoryDetail(name, status) {
-                console.log(name, status);
-                htmlTextToSend = `<form id="add-category" action="#" method="post">
+                const htmlTextToSend = `<form id="add-category" action="#" method="post">
                 <h2><u>Add Food Category </u></h2>
                 <table>
                     <tr>
@@ -369,7 +388,16 @@ class cafe {
         }
 
         deleteFoodCategoryDetail(name) {
-                console.log(name);
+                const isConfirmed = confirm("Are You sure you Want to delete this record ?");
+                if (isConfirmed) {
+                        this.#queryString = `delete from foodcategorylist where name='${name}'`;
+                        this.#connection.query(this.#queryString)
+                        alert("Record Deleted");
+                        this.onClickOfmanageFoodCategory();
+                } else {
+                        alert("Cancelled");
+                        this.onClickOfmanageFoodCategory();
+                }
         }
 
         onClickOfAddFoodItem() {
@@ -456,7 +484,6 @@ class cafe {
                                         if (error) {
                                                 return console.error("Error executing query.....");
                                         }
-                                        console.log(result);
                                 });
                         });
         }
@@ -504,20 +531,16 @@ class cafe {
                                         manageFoodItemHtml += `
                                                 <tr>
                                                         <td id="customer-manage-td-th">${i + 1}</td>
-                                                        <td id="customer-manage-td-th">${foodItemData[i].name
-                                                }</td>
-                                                        <td id="customer-manage-td-th">${foodItemData[i].quantity
-                                                }</td>
-                                                        <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate
-                                                }</td>
-                                                        <td id="customer-manage-td-th">${foodItemData[i].category
-                                                }</td>
+                                                        <td id="customer-manage-td-th">${foodItemData[i].name}</td>
+                                                        <td id="customer-manage-td-th">${foodItemData[i].quantity}</td>
+                                                        <td id="customer-manage-td-th">Rs. ${foodItemData[i].rate}</td>
+                                                        <td id="customer-manage-td-th">${foodItemData[i].category}</td>
                                                         <td id="customer-manage-td-th"><i class="fa fa-check-circle fa-2x" style="color: ${color};"></i></td>
                                                         <td id="customer-manage-td-th">
                                                         <i style="color: white;background-color:rgb(3, 105, 3);padding:7px;border-radius: 5px; margin-left: 8px"
-                                                                class="fas fa-pencil-alt"></i>
+                                                                class="fas fa-pencil-alt" onclick="myCafe.editFoodItemDetails('${foodItemData[i]}')"></i>
                                                         <i style="color: white;background-color:red;padding:7px ;border-radius: 5px; margin-left: 8px"
-                                                        class="fas fa-trash-alt"></i>
+                                                        class="fas fa-trash-alt" onclick="myCafe.deleteFoodItemDetails('${foodItemData[i].name}')"></i>
                                                         </td>
                                                 </tr>`;
                                 }
@@ -530,6 +553,23 @@ class cafe {
                         });
                 } catch (error) {
                         console.log("Some error Occured.....");
+                }
+        }
+
+        editFoodItemDetails(data) {
+
+        }
+
+        deleteFoodItemDetails(name) {
+                const isConfirmed = confirm("Are You sure you Want to delete this record ?");
+                if (isConfirmed) {
+                        this.#queryString = `delete from fooditemlist where name='${name}'`;
+                        this.#connection.query(this.#queryString)
+                        alert("Record Deleted");
+                        this.onClickOfManageFoodItem();
+                } else {
+                        alert("Cancelled");
+                        this.onClickOfManageFoodItem();
                 }
         }
 
