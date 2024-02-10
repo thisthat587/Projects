@@ -1,0 +1,38 @@
+#wrapper {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+}
+h1{
+    background-color: black;
+    color: aliceblue;
+}
+
+body{
+    background-color: aqua;
+}
+
+#guess{
+    font-size: 30px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.guessSubmit{
+    margin-left: 23px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: black;
+    color: aliceblue;
+    height: 40px;
+    width: 150px;
+}
+.guessField{
+    border-width: 5px;
+    height: 25px;
+}

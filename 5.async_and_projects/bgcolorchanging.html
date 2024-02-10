@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <style>
+        body {
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            height: 100vh;
+        }
+    </style> -->
+</head>
+
+<body>
+
+    <h1 style="margin-left: 30%; margin-top: 5%;">Click on start button to start changing color :</h1>
+    <hr>
+    <button style="margin-left: 50%; margin-top: 5.1%;" id="start" type="button" class="btn btn-primary">START</button>
+    <button style="margin-left: 50%; margin-top: 6.5%;" id="stop" type="button" class="btn btn-primary">STOP</button>
+</body>
+
+<script>
+    const colorNames = [
+        'red',
+        'blue',
+        'green',
+        'yellow',
+        'purple',
+        'orange',
+        'cyan',
+        'magenta',
+        'black',
+        'white',
+        'gray',
+        'brown',
+        'pink',
+        'gold',
+        'silver',
+        'olive',
+        'teal',
+        'navy',
+        'maroon',
+    ];
+    const getstart = document.getElementById('start')
+    const drop = document.getElementById('stop');
+    let i = 0;
+    let intervalId;
+
+    function changeColor() {
+        intervalId = setInterval(() => {
+            if (i === colorNames.length) {
+                i = 0;
+            }
+            document.querySelector('body').style.backgroundColor = colorNames[i++];
+        }, 500)
+    }
+
+    function stopChangingColor() {
+        clearInterval(intervalId);
+        intervalId = null
+    }
+
+    getstart.addEventListener('click', changeColor)
+    drop.addEventListener('click', stopChangingColor)
+</script>
+
+</html>
