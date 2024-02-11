@@ -1,0 +1,17 @@
+td {
+        padding-bottom: 5px;
+        align-items: center;
+}
+
+.custom-button {
+        color: white;
+        background-color: rgb(3, 105, 3);
+        padding: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+}
+
+.fas.fa-arrow-left {
+        transform: scale(1.8);
+        line-height: 1.5;
+}

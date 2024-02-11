@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+        <title>Document</title>
+</head>
+
+<body style="background-color: aliceblue;">
+
+
+        <!-- starting of entry div -->
+        <div style="display: flex; justify-content: center; height: 100vh; align-items: center;" id="entry">
+                <form action="">
+                        <table class="table-borderless">
+                                <h2 style="text-align: center;">ENTER ANY ONE</h2>
+                                <hr>
+                                <tr>
+                                        <td><input type="text" class="form-control" id="name" placeholder="Name"></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;">Or</td>
+                                </tr>
+                                <tr>
+                                        <td><input type="text" class="form-control" id="fname"
+                                                        placeholder="Father's Name"></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: center;">Or</td>
+                                </tr>
+                                <tr>
+                                        <td><input type="text" class="form-control" id="mob" placeholder="Mobile"></td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <div class="d-grid">
+                                                        <button type="button" class="btn btn-primary btn-block"
+                                                                id="submit"
+                                                                onclick="event.preventDefault(); myApp.checkInput()">Search</button>
+                                                </div>
+                                        </td>
+                                </tr>
+                        </table>
+                </form>
+        </div>
+        <!-- ending of entry div -->
+
+
+        <!-- starting of student-list div -->
+        <div style="display: none" id="student-list"></div>
+        <!-- ending of student-list div -->
+
+
+        <!-- starting of dashboard div -->
+        <div id="dashboard" style="display: none;"></div>
+        <!-- ending of dashboard div -->
+
+
+        <!-- starting of profile div -->
+        <div id="profile" style="display: none;"></div>
+        <!-- Ending of profile div -->
+
+
+        <!-- Startig of fee-status div -->
+        <div style="display: none;" id="fee-status">
+                <center>
+                        <div id="doc">
+                                <div></div>
+                        </div>
+                </center>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <center>
+                        <div class="fixed-bottom bg-primary text-white" id="fee">
+                                <button type="button" class="btn btn-primary btn-block" id="paying" disabled>
+                                        <h5>Total Fee ₹ 0.00 <br> Pay Now</h5>
+                                </button>
+                        </div>
+                </center>
+        </div>
+        <!-- ending of fee-status div -->
+
+
+        <script src="renderer.js"></script>
+</body>
+
+</html>
