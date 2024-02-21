@@ -3,11 +3,13 @@ const mysql = require('mysql2');
 const Con = require('./feeStatusRenderer');
 
 
-class SchoolApp {
+class SchoolApp
+{
 
         #queryString;
 
-        constructor() {
+        constructor()
+        {
                 this.keepConnectionAlive();
         }
         #connection = mysql.createConnection({
@@ -18,30 +20,37 @@ class SchoolApp {
         });
 
 
-        keepConnectionAlive() {
-                setInterval(() => {
+        keepConnectionAlive ()
+        {
+                setInterval(() =>
+                {
                         this.#connection.query('select 1');
                 }, 5000)
         }
 
 
-        checkInput() {
+        checkInput ()
+        {
                 // document.getElementById('entry').style.display = 'none';
                 // document.getElementById('student-list').style.display = '';
                 const name = document.getElementById('name').value.toUpperCase();
                 const fname = document.getElementById('fname').value.toUpperCase();
                 const mob = document.getElementById('mob').value.toUpperCase();
 
-                if (name !== "" && fname === '' && mob === '') {
+                if (name !== "" && fname === '' && mob === '')
+                {
                         this.#queryString = `SELECT admno,name, fname, fmob FROM tbl_admission WHERE name='${name}' AND session = "2023-2024" AND active = 1`;
                         this.listStudents(this.#queryString);
-                } else if (fname !== "" && name === '' && mob === '') {
+                } else if (fname !== "" && name === '' && mob === '')
+                {
                         this.#queryString = `SELECT admno,name, fname, fmob FROM tbl_admission WHERE fname='${fname}' AND session = "2023-2024" AND active = 1`;
                         this.listStudents(this.#queryString);
-                } else if (mob !== "" && name === '' && fname === '') {
+                } else if (mob !== "" && name === '' && fname === '')
+                {
                         this.#queryString = `SELECT admno,name, fname, fmob FROM tbl_admission WHERE fmob='${mob}' AND session = "2023-2024" AND active = 1`;
                         this.listStudents(this.#queryString);
-                } else {
+                } else
+                {
                         alert("Please Enter valid data...")
                         document.location.reload();
                 }
@@ -50,11 +59,14 @@ class SchoolApp {
         }
 
 
-        listStudents() {
+        listStudents ()
+        {
                 // try {
-                this.#connection.query(this.#queryString, (error, result) => {
+                this.#connection.query(this.#queryString, (error, result) =>
+                {
                         console.table(result);
-                        if (result.length > 0) {
+                        if (result.length > 0)
+                        {
                                 document.getElementById('entry').style.display = 'none';
                                 document.getElementById('student-list').style.display = '';
 
@@ -69,7 +81,8 @@ class SchoolApp {
                 </tr>
                 </thead>
                 <tbody>`;
-                                result.forEach((each) => {
+                                result.forEach((each) =>
+                                {
                                         studentListHtml += `<tr>
                     <td>${each.name}</td>
                     <td>${each.fname}</td>
@@ -81,7 +94,8 @@ class SchoolApp {
                 </table>
                 </form>`;
                                 document.getElementById('student-list').innerHTML = studentListHtml;
-                        } else {
+                        } else
+                        {
                                 alert("Data not found");
                                 document.location.reload();
                         }
@@ -95,7 +109,8 @@ class SchoolApp {
         }
 
 
-        showDashboard(admno) {
+        showDashboard (admno)
+        {
                 let dashboardHtml = `<h4 style="text-align: center; background-color: aqua;">DASHBOARD</h4>
                 <hr>`;
                 document.getElementById('entry').style.display = 'none';
@@ -104,8 +119,10 @@ class SchoolApp {
                 document.getElementById('fee-status').style.display = 'none';
                 document.getElementById('dashboard').style.display = '';
                 this.#queryString = `SELECT admno, name, fname, class, section, roll, fmob, session FROM tbl_admission WHERE admno='${admno}' AND session = '2023-2024' AND active = 1`
-                this.#connection.query(this.#queryString, (error, result) => {
-                        result.forEach((each) => {
+                this.#connection.query(this.#queryString, (error, result) =>
+                {
+                        result.forEach((each) =>
+                        {
                                 console.log(each)
                                 dashboardHtml += `<table style="margin-top: 20px;">
                                 <tr>
@@ -189,15 +206,18 @@ class SchoolApp {
                 });
         }
 
-        showProfile(admno) {
+        showProfile (admno)
+        {
                 document.getElementById('entry').style.display = 'none';
                 document.getElementById('student-list').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'none';
                 document.getElementById('profile').style.display = '';
                 let profileHtml = '';
                 this.#queryString = `SELECT admno,name, fname, class, section, roll, fmob, session, active,transport FROM tbl_admission WHERE admno='${admno}' AND session = '2023-2024' AND active = 1`
-                this.#connection.query(this.#queryString, (error, result) => {
-                        result.forEach((each) => {
+                this.#connection.query(this.#queryString, (error, result) =>
+                {
+                        result.forEach((each) =>
+                        {
                                 profileHtml += `<table style="margin-bottom: 10px;">
                                 <tr>
                                     <div class="d-grid">
@@ -273,7 +293,8 @@ class SchoolApp {
                         });
                 });
                 this.#queryString = `select transportfee from tbl_stdfeemaster where admno='${admno}' AND session = '2023-2024'`
-                this.#connection.query(this.#queryString, (error, result) => {
+                this.#connection.query(this.#queryString, (error, result) =>
+                {
                         profileHtml += `<tr>
                                 <th width="30%">TRANSPORT FEE</th>
                                 <td width="2%">:</td>
@@ -282,7 +303,8 @@ class SchoolApp {
 
                 });
                 this.#queryString = `select destination from tbl_stdtransdetail where admno='${admno}'`;
-                this.#connection.query(this.#queryString, (error, result) => {
+                this.#connection.query(this.#queryString, (error, result) =>
+                {
                         profileHtml += `<tr>
                                 <th width="30%">DESTINATION</th>
                                 <td width="2%">:</td>
@@ -297,7 +319,8 @@ class SchoolApp {
                 });
         }
 
-        showFeeStatus(admno) {
+        showFeeStatus (admno)
+        {
                 document.getElementById('entry').style.display = 'none';
                 document.getElementById('student-list').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'none';
@@ -307,15 +330,18 @@ class SchoolApp {
                 pay.setAdmission(admno);
         }
 
-        changeStudentName(admno) {
+        changeStudentName (admno)
+        {
                 const isReadOnly = document.getElementById('p-name').hasAttribute('readonly')
-                if (isReadOnly) {
+                if (isReadOnly)
+                {
                         document.getElementById('p-name').removeAttribute('readonly')
                         document.getElementById('p-name-td').innerHTML =
                                 `<i onclick="myApp.changeStudentName('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
                                 class="fas fa-check"></i>`;
                         document.getElementById('p-name').focus();
-                } else {
+                } else
+                {
                         document.getElementById('p-name').setAttribute('readonly', 'true');
                         document.getElementById('p-name-td').innerHTML =
                                 `<i onclick="myApp.changeStudentName('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
@@ -327,15 +353,18 @@ class SchoolApp {
                 this.#connection.query(this.#queryString);
         }
 
-        changeStudentFname(admno) {
+        changeStudentFname (admno)
+        {
                 const isReadOnly = document.getElementById('p-fname').hasAttribute('readonly')
-                if (isReadOnly) {
+                if (isReadOnly)
+                {
                         document.getElementById('p-fname').removeAttribute('readonly')
                         document.getElementById('p-fname-td').innerHTML =
                                 `<i onclick="myApp.changeStudentFname('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
                                 class="fas fa-check"></i>`;
                         document.getElementById('p-fname').focus();
-                } else {
+                } else
+                {
                         document.getElementById('p-fname').setAttribute('readonly', 'true');
                         document.getElementById('p-fname-td').innerHTML =
                                 `<i onclick="myApp.changeStudentFname('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
@@ -347,15 +376,18 @@ class SchoolApp {
                 this.#connection.query(this.#queryString);
         }
 
-        changeStudentMob(admno) {
+        changeStudentMob (admno)
+        {
                 const isReadOnly = document.getElementById('p-mob').hasAttribute('readonly')
-                if (isReadOnly) {
+                if (isReadOnly)
+                {
                         document.getElementById('p-mob').removeAttribute('readonly')
                         document.getElementById('p-mob-td').innerHTML =
                                 `<i onclick="myApp.changeStudentMob('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
                                 class="fas fa-check"></i>`;
                         document.getElementById('p-mob').focus();
-                } else {
+                } else
+                {
                         document.getElementById('p-mob').setAttribute('readonly', 'true');
                         document.getElementById('p-mob-td').innerHTML =
                                 `<i onclick="myApp.changeStudentMob('${admno}')" style="color: white;background-color:rgb(3, 100, 3);padding:7px;border-radius: 5px; "
